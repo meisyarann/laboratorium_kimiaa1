@@ -1,0 +1,1887 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChemVirtual Lab - Laboratorium Virtual Kimia & Multimedia Pembelajaran</title>
+  <meta name="description" content="Website Laboratorium Virtual Kimia Interaktif dengan materi pengenalan alat-alat praktikum, keselamatan kerja, APD, hukum dasar kimia, struktur atom, SPU, simulasi praktikum, LKPD PBL, kuis, dan sertifikat resmi.">
+  
+  <!-- Google Fonts: Outfit, Plus Jakarta Sans, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Three.js CDN untuk 3D WebGL Apparatus Inspector -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- QRCode.js & jsQR CDN untuk Fitur AR Marker Card & Scanner Kamera -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/certificate.css">
+</head>
+<body>
+
+  <!-- Partikel Molekul Latar Belakang Animasi -->
+  <div class="bg-molecules" id="bg-molecules-container"></div>
+
+  <div id="app-container">
+    
+    <!-- ==========================================================================
+         HEADER SITUS UTAMA (STICKY NAVBAR)
+         ========================================================================== -->
+    <header class="site-header">
+      <div class="header-inner">
+        <!-- Logo Brand -->
+        <div class="brand-wrapper" title="Kembali ke Beranda">
+          <div class="brand-icon-box">⚗️</div>
+          <div class="brand-title-group">
+            <h1>ChemVirtual Lab <span class="brand-badge">Virtual 3D</span></h1>
+            <div class="brand-subtitle">Laboratorium Kimia Multimedia Interaktif</div>
+          </div>
+        </div>
+
+        <!-- Profil Guru Kimia -->
+        <div class="teacher-pill" title="Guru Pengampu Mata Pelajaran Kimia">
+          <div class="teacher-avatar">FA</div>
+          <div class="teacher-info-mini">
+            <span class="teacher-name">Fatma Alawiyah, S.Pd.,Gr</span>
+            <span class="teacher-role">NIP: 200103272025212017</span>
+          </div>
+        </div>
+
+        <!-- Global Progress Tracker -->
+        <div class="progress-container">
+          <div class="progress-track" title="Kemajuan Belajar Anda">
+            <div class="progress-fill" id="global-progress-fill"></div>
+          </div>
+          <span class="progress-text" id="global-progress-text">10%</span>
+        </div>
+
+        <!-- Header Actions -->
+        <div class="header-actions">
+          <button class="btn-header" onclick="window.App.navigateToModule(10)" title="Lihat Sertifikat Kelulusan">
+            <span>🏆</span> Sertifikat
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ==========================================================================
+         HORIZONTAL SCROLLER SUB-NAV (10 MODUL)
+         ========================================================================== -->
+    <nav class="modules-nav-bar" aria-label="Navigasi Modul Belajar">
+      <div class="modules-nav-inner">
+        <a href="#modul-1" class="nav-module-item active" data-mod="1">
+          <span class="mod-num">1</span> <span>Beranda</span>
+        </a>
+        <a href="#modul-2" class="nav-module-item" data-mod="2">
+          <span class="mod-num">2</span> <span>Kartun APD Lengkap</span>
+        </a>
+        <a href="#modul-3" class="nav-module-item" data-mod="3">
+          <span class="mod-num">3</span> <span>Aturan Laboratorium</span>
+        </a>
+        <a href="#modul-4" class="nav-module-item" data-mod="4">
+          <span class="mod-num">4</span> <span>Alat 3D/AR & Simbol GHS</span>
+        </a>
+        <a href="#modul-5" class="nav-module-item" data-mod="5">
+          <span class="mod-num">5</span> <span>Materi Kimia & Atom</span>
+        </a>
+        <a href="#modul-6" class="nav-module-item" data-mod="6">
+          <span class="mod-num">6</span> <span>Praktikum Sederhana</span>
+        </a>
+        <a href="#modul-7" class="nav-module-item" data-mod="7">
+          <span class="mod-num">7</span> <span>Video & LKPD PBL</span>
+        </a>
+        <a href="#modul-8" class="nav-module-item" data-mod="8">
+          <span class="mod-num">8</span> <span>Kuis Evaluasi</span>
+        </a>
+        <a href="#modul-9" class="nav-module-item" data-mod="9">
+          <span class="mod-num">9</span> <span>Refleksi Siswa</span>
+        </a>
+        <a href="#modul-10" class="nav-module-item" data-mod="10">
+          <span class="mod-num">10</span> <span>Cetak Sertifikat</span>
+        </a>
+      </div>
+    </nav>
+
+    <!-- ==========================================================================
+         KONTEN UTAMA (PAGE VIEWS CONTAINER)
+         ========================================================================== -->
+    <main class="main-content">
+
+      <!-- -------------------------------------------------------------
+           HALAMAN 1: BERANDA
+           ------------------------------------------------------------- -->
+      <section id="page-module-1" class="page-view active-view">
+        <div class="glass-panel">
+          <div class="hero-section">
+            <div class="hero-content">
+              <h2>Eksplorasi Sains Digital di <span>ChemVirtual Lab</span></h2>
+              <p class="hero-desc">
+                Selamat datang di portal laboratorium kimia virtual terpadu. Pelajari keselamatan praktikum, amati alat laboratorium dalam 3D/AR interaktif, simulasikan hukum kekekalan massa & uji nyala api, telaah insiden lab berbasis <em>Problem-Based Learning</em>, dan raih sertifikat resmi kelulusan Anda!
+              </p>
+
+              <!-- Kartu Profil Guru Pengampu -->
+              <div class="teacher-hero-card">
+                <div class="teacher-photo-badge">👩‍🏫</div>
+                <div class="teacher-details">
+                  <h4>Fatma Alawiyah, S.Pd.,Gr</h4>
+                  <div class="teacher-nip">NIP. 200103272025212017</div>
+                  <div class="teacher-meta">Guru Kimia & Pengembang Media Pembelajaran Multimedia</div>
+                </div>
+              </div>
+
+              <!-- Quick Stats -->
+              <div class="hero-stats-grid">
+                <div class="stat-item">
+                  <div class="stat-num">10</div>
+                  <div class="stat-label">Modul Terintegrasi</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-num">3D / AR</div>
+                  <div class="stat-label">Inspektor Alat Lab</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-num" id="home-stat-completed">1 / 10</div>
+                  <div class="stat-label">Modul Terselesaikan</div>
+                </div>
+              </div>
+
+              <div style="display: flex; gap: 0.85rem; flex-wrap: wrap;">
+                <button class="btn btn-primary btn-lg" onclick="window.App.navigateToModule(2)">
+                  Mulai Belajar Sekarang (Modul 2) →
+                </button>
+                <button class="btn btn-secondary btn-lg" onclick="window.App.navigateToModule(6)">
+                  🧪 Coba Simulasi Praktikum
+                </button>
+              </div>
+            </div>
+
+            <!-- Visual Flask Animasi -->
+            <div class="hero-visual-box">
+              <div class="hero-card-floating card-float-1">
+                <span>🥽</span> APD Standar SNI Lengkap
+              </div>
+              <div class="hero-flask-anim">
+                <svg viewBox="0 0 140 170" fill="none">
+                  <path d="M55 10 L85 10 L85 45 L130 140 C138 155, 125 165, 105 165 L35 165 C15 165, 2 155, 10 140 L55 45 Z" fill="rgba(255,255,255,0.7)" stroke="#0284c7" stroke-width="4"/>
+                  <path d="M22 135 C40 120, 100 120, 118 135 L105 160 L35 160 Z" fill="linear-gradient(180deg, #38bdf8 0%, #0284c7 100%)" opacity="0.85"/>
+                  <circle cx="50" cy="140" r="4" fill="#ffffff" opacity="0.8"/>
+                  <circle cx="85" cy="130" r="3" fill="#ffffff" opacity="0.8"/>
+                  <circle cx="70" cy="150" r="5" fill="#ffffff" opacity="0.6"/>
+                </svg>
+              </div>
+              <div class="hero-card-floating card-float-2">
+                <span>⚡</span> Reaksi Kimia & Titrasi Virtual
+              </div>
+            </div>
+          </div>
+
+          <!-- Peta Alur Modul Pembelajaran (10 Modul) -->
+          <div class="panel-header" style="margin-top: 2rem;">
+            <div class="panel-title-group">
+              <h2>🗺️ Peta Alur Modul Pembelajaran</h2>
+              <p>Pelajari setiap modul secara berurutan untuk membangun kompetensi laboratorium kimia yang komprehensif.</p>
+            </div>
+          </div>
+
+          <div class="modules-grid">
+            <div class="module-card completed" data-mod="1">
+              <div class="mod-card-header">
+                <div class="mod-card-icon">🏠</div>
+                <span class="mod-card-badge">✓ Selesai</span>
+              </div>
+              <div class="mod-card-title">1. Beranda Portal</div>
+              <div class="mod-card-desc">Pengantar laboratorium virtual, capaian pembelajaran, dan profil pengembang media.</div>
+              <div class="mod-card-action">Buka Halaman →</div>
+            </div>
+
+            <div class="module-card" data-mod="2">
+              <div class="mod-card-header">
+                <div class="mod-card-icon">🥼</div>
+                <span class="mod-card-badge">Modul 2</span>
+              </div>
+              <div class="mod-card-title">2. Kartun Manusia APD</div>
+              <div class="mod-card-desc">Karakter interaktif berseragam APD lengkap dengan hotspot edukatif dan checklist kelayakan.</div>
+              <div class="mod-card-action">Eksplorasi APD →</div>
+            </div>
+
+            <div class="module-card" data-mod="3">
+              <div class="mod-card-header">
+                <div class="mod-card-icon">📋</div>
+                <span class="mod-card-badge">Modul 3</span>
+              </div>
+              <div class="mod-card-title">3. Aturan Laboratorium</div>
+              <div class="mod-card-desc">SOP praktikum, panduan DOs & DON'Ts, penanganan tumpahan asam pekat & teknik APAR P.A.S.S.</div>
+              <div class="mod-card-action">Pelajari Aturan →</div>
+            </div>
+
+            <div class="module-card" data-mod="4">
+              <div class="mod-card-header">
+                <div class="mod-card-icon">🔍</div>
+                <span class="mod-card-badge">Modul 4</span>
+              </div>
+              <div class="mod-card-title">4. Alat 3D/AR & Simbol GHS</div>
+              <div class="mod-card-desc">Inspeksi 15+ alat praktikum kimia 3D realistis, mode kamera AR nyata, scanner kartu QR, dan simbol bahaya GHS.</div>
+              <div class="mod-card-action">Buka Alat 3D →</div>
+            </div>
+
+            <div class="module-card" data-mod="5">
+              <div class="mod-card-header">
+                <div class="mod-card-icon">⚛️</div>
+                <span class="mod-card-badge">Modul 5</span>
+              </div>
+              <div class="mod-card-title">5. Materi Teori Kimia</div>
+              <div class="mod-card-desc">Hukum dasar kimia, simulator orbit elektron model atom Bohr dinamis, dan SPU interaktif 118 unsur.</div>
+              <div class="mod-card-action">Pelajari Teori →</div>
+            </div>
+
+            <div class="module-card" data-mod="6">
+              <div class="mod-card-header">
+                <div class="mod-card-icon">⚖️</div>
+                <span class="mod-card-badge">Modul 6</span>
+              </div>
+              <div class="mod-card-title">6. Praktikum Sederhana</div>
+              <div class="mod-card-desc">Simulasi virtual uji neraca Lavoisier, uji nyala api spektrum kation, dan titrasi asam-basa.</div>
+              <div class="mod-card-action">Mulai Praktikum →</div>
+            </div>
+
+            <div class="module-card" data-mod="7">
+              <div class="mod-card-header">
+                <div class="mod-card-icon">🎥</div>
+                <span class="mod-card-badge">Modul 7</span>
+              </div>
+              <div class="mod-card-title">7. Video & LKPD PBL</div>
+              <div class="mod-card-desc">Video analisis insiden kelalaian lab terintegrasi LKPD 5 Fase Problem-Based Learning.</div>
+              <div class="mod-card-action">Isi LKPD PBL →</div>
+            </div>
+
+            <div class="module-card" data-mod="8">
+              <div class="mod-card-header">
+                <div class="mod-card-icon">📝</div>
+                <span class="mod-card-badge">Modul 8</span>
+              </div>
+              <div class="mod-card-title">8. Kuis Evaluasi</div>
+              <div class="mod-card-desc">15 butir soal pilihan ganda interaktif dengan timer, skor langsung, dan pembahasan lengkap.</div>
+              <div class="mod-card-action">Kerjakan Kuis →</div>
+            </div>
+
+            <div class="module-card" data-mod="9">
+              <div class="mod-card-header">
+                <div class="mod-card-icon">💡</div>
+                <span class="mod-card-badge">Modul 9</span>
+              </div>
+              <div class="mod-card-title">9. Refleksi Siswa</div>
+              <div class="mod-card-desc">Instrumen refleksi metakognitif model 3-2-1 dan komitmen janji praktikan kimia.</div>
+              <div class="mod-card-action">Tulis Refleksi →</div>
+            </div>
+
+            <div class="module-card" data-mod="10">
+              <div class="mod-card-header">
+                <div class="mod-card-icon">🏆</div>
+                <span class="mod-card-badge">Modul 10</span>
+              </div>
+              <div class="mod-card-title">10. Cetak Sertifikat</div>
+              <div class="mod-card-desc">Penerbitan piagam kelulusan resmi beresolusi tinggi dengan tanda tangan digital Guru Kimia.</div>
+              <div class="mod-card-action">Cetak Piagam →</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- -------------------------------------------------------------
+           HALAMAN 2: KARTUN MANUSIA LENGKAP MENGGUNAKAN APD
+           ------------------------------------------------------------- -->
+      <section id="page-module-2" class="page-view">
+        <div class="glass-panel">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <h2>🥼 Kartun Manusia Lengkap Menggunakan APD Kimia</h2>
+              <p>Klik tombol lingkaran nomor (hotspot beranimasi) pada setiap bagian tubuh kartun untuk mempelajari fungsi, spesifikasi, dan standar keselamatan APD.</p>
+            </div>
+            <span class="badge-tag">Standar OHS & K3 Laboratorium</span>
+          </div>
+
+          <div class="apd-container">
+            <!-- Stage Karakter Kartun Interaktif -->
+            <div class="apd-character-stage">
+              <h3>Saintis Laboratorium Kimia Ber-APD Lengkap</h3>
+              <div class="stage-hint">💡 Klik Hotspot (1 s/d 7) untuk Melihat Detail Spesifikasi</div>
+              <div id="apd-cartoon-mount"></div>
+            </div>
+
+            <!-- Panel Detail Hotspot & Mini-Game Kelengkapan -->
+            <div class="apd-info-panel">
+              <div id="apd-detail-mount"></div>
+
+              <!-- Checklist Mini-Game APD -->
+              <div class="apd-checklist-box">
+                <h4>
+                  <span>🛡️ Uji Kelengkapan APD Praktikan</span>
+                  <span id="apd-counter-text" style="font-size:0.8rem; color:var(--accent-blue);">0 / 7 Lengkap</span>
+                </h4>
+                <p style="font-size:0.84rem; color:var(--text-secondary); margin-bottom:0.85rem;">
+                  Centang seluruh kelengkapan APD di bawah ini untuk menguji apakah Anda telah siap diizinkan memasuki laboratorium kimia:
+                </p>
+
+                <div class="checklist-items-grid" id="apd-checklist-items">
+                  <label class="checklist-item">
+                    <input type="checkbox" data-part="head">
+                    <span>1. Penutup Kepala (Hairnet)</span>
+                  </label>
+                  <label class="checklist-item">
+                    <input type="checkbox" data-part="goggles">
+                    <span>2. Kacamata Pengaman (Goggles)</span>
+                  </label>
+                  <label class="checklist-item">
+                    <input type="checkbox" data-part="mask">
+                    <span>3. Masker Kimia / Respirator</span>
+                  </label>
+                  <label class="checklist-item">
+                    <input type="checkbox" data-part="coat">
+                    <span>4. Jas Lab Katun Panjang</span>
+                  </label>
+                  <label class="checklist-item">
+                    <input type="checkbox" data-part="gloves">
+                    <span>5. Sarung Tangan Nitril</span>
+                  </label>
+                  <label class="checklist-item">
+                    <input type="checkbox" data-part="pants">
+                    <span>6. Celana Panjang Tebal</span>
+                  </label>
+                  <label class="checklist-item">
+                    <input type="checkbox" data-part="shoes">
+                    <span>7. Sepatu Tertutup Anti-Slip</span>
+                  </label>
+                </div>
+
+                <div style="margin-top: 1rem;">
+                  <button class="btn btn-primary" id="btn-verify-apd">Verifikasi Izin Masuk Lab</button>
+                </div>
+
+                <div id="apd-verify-status"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="page-nav-footer">
+            <button class="btn btn-secondary btn-page-prev">← Modul 1: Beranda</button>
+            <button class="btn btn-primary btn-page-next">Lanjut ke Modul 3: Aturan Laboratorium →</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- -------------------------------------------------------------
+           HALAMAN 3: ATURAN DALAM LABORATORIUM (SOP & TANGGAP DARURAT)
+           ------------------------------------------------------------- -->
+      <section id="page-module-3" class="page-view">
+        <div class="glass-panel">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <h2>📋 Aturan & Standar Operasional Prosedur (SOP) Laboratorium</h2>
+              <p>Pedoman komprehensif keselamatan kerja di laboratorium kimia, etika praktikum, dan respon cepat tanggap darurat kecelakaan kerja.</p>
+            </div>
+            <span class="badge-tag">Zero Accident Protocol</span>
+          </div>
+
+          <!-- Tab Kategori Aturan -->
+          <div class="rules-tabs">
+            <button class="rules-tab-btn active" data-target="rules-tab-tahapan">3 Tahapan Praktikum</button>
+            <button class="rules-tab-btn" data-target="rules-tab-dos-donts">Boleh vs Dilarang (DOs & DON'Ts)</button>
+            <button class="rules-tab-btn" data-target="rules-tab-emergency">Tanggap Darurat & APAR</button>
+          </div>
+
+          <!-- Tab 1: 3 Tahapan Praktikum -->
+          <div id="rules-tab-tahapan" class="rules-content-tab active">
+            <div class="emergency-grid">
+              <div class="emergency-card">
+                <div class="emergency-icon-banner">
+                  <span>🚪</span>
+                  <h4>1. Sebelum Memasuki Lab</h4>
+                </div>
+                <ul class="emergency-steps">
+                  <li>Membaca dan memahami modul/penuntun praktikum serta MSDS bahan kimia yang akan digunakan.</li>
+                  <li>Mengenakan APD lengkap (jas lab dikancingkan, kacamata, masker, sepatu tertutup) sebelum melangkah ke area kerja.</li>
+                  <li>Mengikat rambut panjang ke belakang dan melepas perhiasan logam di tangan.</li>
+                  <li>Menaruh tas, jaket tebal, dan makanan di loker luar laboratorium.</li>
+                </ul>
+              </div>
+
+              <div class="emergency-card">
+                <div class="emergency-icon-banner">
+                  <span>🧪</span>
+                  <h4>2. Selama Bekerja di Meja Lab</h4>
+                </div>
+                <ul class="emergency-steps">
+                  <li>Dilarang makan, minum, merokok, atau mencicipi bahan kimia apa pun tanpa kecuali.</li>
+                  <li>Membaca label kemasan bahan kimia minimal DUA KALI sebelum mengambil atau menuangkan.</li>
+                  <li>Gunakan lemari asam (fume hood) ketika mereaksikan zat beracun atau menguap pekat.</li>
+                  <li>Jangan pernah mengarahkan mulut tabung reaksi yang sedang dipanaskan ke wajah sendiri atau orang lain.</li>
+                </ul>
+              </div>
+
+              <div class="emergency-card">
+                <div class="emergency-icon-banner">
+                  <span>🧹</span>
+                  <h4>3. Selesai Praktikum</h4>
+                </div>
+                <ul class="emergency-steps">
+                  <li>Pisahkan limbah kimia sesuai jenisnya ke dalam botol limbah B3 (jangan dibuang ke wastafel!).</li>
+                  <li>Cuci seluruh alat gelas dengan akuades dan kembalikan ke rak pengeringan.</li>
+                  <li>Pastikan kran gas Bunsen dan kran air tertutup rapat sebelum meninggalkan ruangan.</li>
+                  <li>Lepas sarung tangan dan cuci tangan bersih dengan sabun dan air mengalir.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 2: DOs & DON'Ts -->
+          <div id="rules-tab-dos-donts" class="rules-content-tab">
+            <div class="rules-dos-donts-grid">
+              <div class="rules-column-dos">
+                <div class="rules-col-title">
+                  <span>✅</span> HAL YANG HARUS DILAKUKAN (DOs)
+                </div>
+                <ul class="rule-list">
+                  <li><span class="rule-icon">✔️</span> Selalu menuangkan asam pekat ke dalam air perlahan sambil diaduk (AA = Asam ke Air), BUKAN sebaliknya untuk mencegah lonjakan panas mendadak.</li>
+                  <li><span class="rule-icon">✔️</span> Menggunakan bola hisap (pipette bulb/filler) saat mengambil cairan kimia melalui pipet ukur/volume.</li>
+                  <li><span class="rule-icon">✔️</span> Mengibaskan uap zat kimia ke arah hidung dengan telapak tangan (metode wafting) bila perlu mengidentifikasi aroma secara hati-hati.</li>
+                  <li><span class="rule-icon">✔️</span> Segera laporkan sekecil apa pun tumpahan, kerusakan alat gelas, atau luka kepada guru pembimbing.</li>
+                </ul>
+              </div>
+
+              <div class="rules-column-donts">
+                <div class="rules-col-title">
+                  <span>❌</span> DILARANG KERAS DILAKUKAN (DON'Ts)
+                </div>
+                <ul class="rule-list">
+                  <li><span class="rule-icon">❌</span> Dilarang memipet cairan kimia langsung menggunakan mulut (mouth pipetting) karena berisiko fatal tertelan racun.</li>
+                  <li><span class="rule-icon">❌</span> Dilarang mencium bau zat kimia secara langsung dengan mendekatkan hidung ke mulut wadah.</li>
+                  <li><span class="rule-icon">❌</span> Dilarang mengembalikan sisa zat kimia yang telah diambil ke dalam botol reagen utama (mencegah kontaminasi silang).</li>
+                  <li><span class="rule-icon">❌</span> Dilarang bercanda, berlari, atau bermain-main di dalam ruang laboratorium.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 3: Tanggap Darurat & APAR -->
+          <div id="rules-tab-emergency" class="rules-content-tab">
+            <div class="emergency-grid">
+              <div class="emergency-card">
+                <div class="emergency-icon-banner">
+                  <span>🧯</span>
+                  <h4>Pengoperasian APAR (Metode P.A.S.S.)</h4>
+                </div>
+                <p style="font-size:0.86rem; margin-bottom:0.6rem;">Teknik standar internasional pemadaman kebakaran awal:</p>
+                <ol class="emergency-steps">
+                  <li><strong>P - Pull</strong>: Tarik pin pengunci segel APAR.</li>
+                  <li><strong>A - Aim</strong>: Arahkan corong/nozel ke pangkal/dasar api (bukan lidah api).</li>
+                  <li><strong>S - Squeeze</strong>: Tekan tuas pemadam secara mantap.</li>
+                  <li><strong>S - Sweep</strong>: Sapukan corong merata dari sisi ke sisi hingga api padam.</li>
+                </ol>
+              </div>
+
+              <div class="emergency-card">
+                <div class="emergency-icon-banner">
+                  <span>🚿</span>
+                  <h4>Eyewash & Emergency Shower</h4>
+                </div>
+                <p style="font-size:0.86rem; margin-bottom:0.6rem;">Pertolongan pertama paparan zat korosif:</p>
+                <ul class="emergency-steps">
+                  <li><strong>Kontak Mata</strong>: Segera menuju stasiun pencuci mata (eyewash), buka kelopak mata dengan jari, dan bilas air mengalir selama minimal 15–20 menit.</li>
+                  <li><strong>Kontak Tubuh Luas</strong>: Tarik tuas safety shower, lepaskan seluruh pakaian yang terpapar zat di bawah guyuran air deras.</li>
+                </ul>
+              </div>
+
+              <div class="emergency-card">
+                <div class="emergency-icon-banner">
+                  <span>☣️</span>
+                  <h4>Pembuangan Limbah Kimia B3</h4>
+                </div>
+                <p style="font-size:0.86rem; margin-bottom:0.6rem;">Pengelolaan limbah ramah lingkungan:</p>
+                <ul class="emergency-steps">
+                  <li><strong>Botol Kuning</strong>: Pelarut organik bebas halogen (etanol, aseton).</li>
+                  <li><strong>Botol Biru</strong>: Larutan logam berat & anorganik asam/basa.</li>
+                  <li><strong>Wadah Benda Tajam</strong>: Pecahan kaca tabung reaksi dan pipet kaca patah.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="page-nav-footer">
+            <button class="btn btn-secondary btn-page-prev">← Modul 2: Kartun APD</button>
+            <button class="btn btn-primary btn-page-next">Lanjut ke Modul 4: Alat 3D & Simbol GHS →</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- -------------------------------------------------------------
+           HALAMAN 4: ALAT PRAKTIKUM 3D/AR & SIMBOL GHS
+           ------------------------------------------------------------- -->
+      <section id="page-module-4" class="page-view">
+        <div class="glass-panel">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <h2>🔬 Alat Praktikum Kimia 3D/AR & Simbol Keselamatan GHS</h2>
+              <p>Inspeksi model 3D alat-alat gelas laboratorium dengan rotasi 360°, zoom, simulasi mode AR, serta pemahaman piktogram bahaya bahan kimia internasional.</p>
+            </div>
+            <span class="badge-tag">Interactive WebGL 3D Inspector</span>
+          </div>
+
+          <div class="equipment-layout">
+            <!-- 3D Three.js Viewer Stage -->
+            <div class="three-viewer-wrapper">
+              <div class="three-toolbar">
+                <span class="three-badge">WebGL 3D Interactive &bull; AR Ready</span>
+                <div class="three-controls-group">
+                  <button class="btn-three-ctrl" id="btn-three-scan" title="Scan Kartu AR / QR Code Alat Praktikum">📷</button>
+                  <button class="btn-three-ctrl" id="btn-three-ar" title="Mode Kamera AR (Live Reality)">📱</button>
+                  <button class="btn-three-ctrl" id="btn-three-card" title="Buka Kartu AR & QR Code Siap Cetak">🖨️</button>
+                  <button class="btn-three-ctrl active" id="btn-three-rotate" title="Toggle Putar Otomatis 360°">🔄</button>
+                  <button class="btn-three-ctrl" id="btn-three-wireframe" title="Toggle Rangka Kaca (Wireframe)">🕸️</button>
+                  <button class="btn-three-ctrl" id="btn-three-reset" title="Reset Sudut Pandang">🎯</button>
+                  <button class="btn-three-ctrl" id="btn-three-vr" title="Mode 3D Stereoskopik VR">🥽</button>
+                </div>
+              </div>
+
+              <!-- Canvas Three.js -->
+              <div id="three-canvas-container"></div>
+
+              <div class="three-interactive-hints">
+                <span class="hint-chip">🖱️ Tahan & Geser Mouse untuk Rotasi 360°</span>
+                <span class="hint-chip">🔍 Scroll / Cubit untuk Zoom In/Out</span>
+                <span class="hint-chip">📱 Klik '📱' untuk Proyeksikan ke Meja (AR)</span>
+                <span class="hint-chip">📷 Klik '📷' untuk Scan Kartu AR</span>
+              </div>
+            </div>
+
+            <!-- Panel Pilihan Alat & Penjelasan -->
+            <div class="equipment-details-box">
+              <h4 style="font-size:1.05rem; color:var(--text-dark);">Pilih Alat Praktikum untuk Diinspeksi:</h4>
+              <div class="equip-selector-grid" id="equip-selector-mount"></div>
+              <div id="equip-info-mount"></div>
+            </div>
+          </div>
+
+          <!-- Bagian Simbol Bahaya Keselamatan Kerja GHS -->
+          <div class="ghs-symbols-section">
+            <div class="panel-header" style="margin-top: 2rem;">
+              <div class="panel-title-group">
+                <h2>⚠️ 9 Simbol Bahaya Bahan Kimia Standar GHS</h2>
+                <p>Kenali arti piktogram belah ketupat berbingkai merah pada kemasan bahan kimia laboratorium untuk mencegah bahaya fatal.</p>
+              </div>
+            </div>
+
+            <div class="ghs-grid" id="ghs-symbols-grid"></div>
+          </div>
+
+          <div class="page-nav-footer">
+            <button class="btn btn-secondary btn-page-prev">← Modul 3: Aturan Lab</button>
+            <button class="btn btn-primary btn-page-next">Lanjut ke Modul 5: Materi Teori Kimia →</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- -------------------------------------------------------------
+           HALAMAN 5: MATERI KIMIA (HUKUM DASAR, STRUKTUR ATOM & SPU)
+           ------------------------------------------------------------- -->
+      <section id="page-module-5" class="page-view">
+        <div class="glass-panel">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <h2>⚛️ Materi Praktikum: Hukum Dasar Kimia, Struktur Atom & SPU</h2>
+              <p>Pendalaman teori dasar ilmu kimia disertai simulator model atom Bohr dinamis, kalkulator hukum dasar, dan Tabel Periodik Unsur 118 unsur interaktif.</p>
+            </div>
+            <span class="badge-tag">Interactive Atomic Simulation</span>
+          </div>
+
+          <!-- Sub Tabs Materi -->
+          <div class="materi-sub-tabs">
+            <button class="btn btn-secondary materi-sub-btn active" data-target="materi-view-atom">⚛️ Simulator Model Atom Bohr</button>
+            <button class="btn btn-secondary materi-sub-btn" data-target="materi-view-molymod">🔮 Alat Peraga Atom Molymod 3D</button>
+            <button class="btn btn-secondary materi-sub-btn" data-target="materi-view-spu">📊 Tabel Periodik Unsur (SPU)</button>
+            <button class="btn btn-secondary materi-sub-btn" data-target="materi-view-laws">⚖️ Hukum-Hukum Dasar Kimia</button>
+          </div>
+
+          <!-- 1. Simulator Model Atom Bohr -->
+          <div id="materi-view-atom" class="materi-sub-view active">
+            <div class="bohr-simulator-layout">
+              <div class="bohr-canvas-stage">
+                <canvas id="bohr-canvas"></canvas>
+                <span class="hint-chip" style="margin-top: 0.5rem;">Orbit Elektron Bergerak Dinamis Berdasarkan Konfigurasi Kulit Bohr</span>
+              </div>
+
+              <div class="bohr-controls-card">
+                <h4 style="color:var(--text-dark); font-size:1.1rem;">Pilih Atom Unsur:</h4>
+                <div class="bohr-element-picker" id="bohr-element-picker-mount"></div>
+                <div id="bohr-info-mount"></div>
+
+                <!-- Pintasan ke Alat Peraga Molymod 3D -->
+                <div class="bohr-molymod-shortcut" style="margin-top:1rem; padding-top:0.85rem; border-top:1px solid #f1f5f9;">
+                  <button class="btn btn-outline-primary btn-sm" id="btn-bohr-to-molymod" style="width:100%; font-weight:700; display:flex; align-items:center; justify-content:center; gap:0.5rem;">
+                    <span>🔮</span> Lihat Bentuk Alat Peraga Molymod 3D →
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. ALAT PERAGA ATOM & MOLEKUL MOLYMOD 3D INTERAKTIF -->
+          <div id="materi-view-molymod" class="materi-sub-view">
+            <!-- Header Ringkasan Molymod -->
+            <div class="molymod-intro-card">
+              <div class="molymod-intro-badge">🔮 Alat Peraga Kimia 3D Interaktif</div>
+              <h3 class="molymod-intro-title">Kit Model Molekul Atom (Molymod 3D)</h3>
+              <p class="molymod-intro-desc">
+                Eksplorasi model bola dan pasak (<em>ball-and-stick</em>) alat peraga Molymod autentik dalam 3 dimensi. Pelajari bentuk geometri molekul berdasarkan teori VSEPR, aturan warna bola atom CPK, dan jenis ikatan kovalen (tunggal, rangkap dua, dan rangkap tiga).
+              </p>
+            </div>
+
+            <!-- Workspace Molymod Layout -->
+            <div class="molymod-workspace-layout">
+              <!-- Kolom Kiri: Panggung 3D Three.js -->
+              <div class="molymod-stage-panel">
+                <div class="molymod-stage-topbar">
+                  <div class="molymod-title-group">
+                    <span class="molymod-title-icon">🧪</span>
+                    <span class="molymod-current-label" id="molymod-display-name">Air (H₂O)</span>
+                  </div>
+                  <div class="molymod-mode-pill" id="molymod-vsepr-tag">Bentuk V / Sudut (104.5°)</div>
+                </div>
+
+                <!-- 3D Canvas Three.js Container -->
+                <div class="molymod-canvas-container" id="molymod-canvas-mount">
+                  <div class="molymod-3d-hint">👆 Drag mouse/touch untuk memutar 360° • Scroll untuk zoom</div>
+                  
+                  <!-- Floating Toolbar 3D -->
+                  <div class="molymod-floating-toolbar">
+                    <button class="btn-3d-tool active" id="btn-moly-ball-stick" title="Model Ball & Stick (Molymod Asli)">🔮 Ball & Stick</button>
+                    <button class="btn-3d-tool" id="btn-moly-space-fill" title="Model Pengisian Ruang (Space-Filling CPK)">🪐 Space-Filling</button>
+                    <button class="btn-3d-tool" id="btn-moly-wireframe" title="Rangka Ikatan / Wireframe">📐 Wireframe</button>
+                    <button class="btn-3d-tool" id="btn-moly-autorotate" title="Putar Otomatis">🔄 Auto-Rotate</button>
+                    <button class="btn-3d-tool" id="btn-moly-explode" title="Bongkar / Pasang Partikel">💥 Bongkar/Pasang</button>
+                    <button class="btn-3d-tool" id="btn-moly-reset-view" title="Reset Pandangan Kamera">🎯 Reset</button>
+                  </div>
+                </div>
+
+                <!-- CPK Color Legend Bar -->
+                <div class="molymod-cpk-legend">
+                  <span class="cpk-item"><span class="cpk-dot cpk-h"></span> H (Putih)</span>
+                  <span class="cpk-item"><span class="cpk-dot cpk-c"></span> C (Hitam)</span>
+                  <span class="cpk-item"><span class="cpk-dot cpk-o"></span> O (Merah)</span>
+                  <span class="cpk-item"><span class="cpk-dot cpk-n"></span> N (Biru)</span>
+                  <span class="cpk-item"><span class="cpk-dot cpk-cl"></span> Cl (Hijau)</span>
+                  <span class="cpk-item"><span class="cpk-dot cpk-s"></span> S (Kuning)</span>
+                  <span class="cpk-item"><span class="cpk-dot cpk-p"></span> P (Ungu)</span>
+                  <span class="cpk-item"><span class="cpk-dot cpk-metal"></span> Logam (Perak)</span>
+                </div>
+              </div>
+
+              <!-- Kolom Kanan: Pilihan Molekul & Detail Informasi -->
+              <div class="molymod-sidebar-panel">
+                <!-- Filter Kategori Molekul -->
+                <div class="molymod-filter-tabs">
+                  <button class="moly-filter-btn active" data-filter="all">Semua</button>
+                  <button class="moly-filter-btn" data-filter="simple">Gas & Anorganik</button>
+                  <button class="moly-filter-btn" data-filter="organic">Senyawa Organik</button>
+                  <button class="moly-filter-btn" data-filter="atoms">Bola Atom Tunggal</button>
+                </div>
+
+                <!-- Grid Kartu Pilihan Molekul Molymod -->
+                <div class="molymod-preset-grid" id="molymod-preset-mount"></div>
+
+                <!-- Card Detail Edukatif Molekul Terpilih -->
+                <div class="molymod-info-card" id="molymod-info-mount"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Tabel Periodik Unsur Interaktif -->
+          <div id="materi-view-spu" class="materi-sub-view">
+            <h4 style="margin-bottom:0.75rem; color:var(--text-dark);">Filter Golongan & Sifat Unsur:</h4>
+            <div class="spu-filter-bar" id="spu-filter-bar-mount">
+              <button class="spu-filter-btn active" data-category="all">Semua Unsur</button>
+              <button class="spu-filter-btn" data-category="nonmetal">Nonlogam</button>
+              <button class="spu-filter-btn" data-category="noble">Gas Mulia</button>
+              <button class="spu-filter-btn" data-category="alkali">Logam Alkali</button>
+              <button class="spu-filter-btn" data-category="alkaline">Alkali Tanah</button>
+              <button class="spu-filter-btn" data-category="metalloid">Metaloid</button>
+              <button class="spu-filter-btn" data-category="halogen">Halogen</button>
+              <button class="spu-filter-btn" data-category="transition">Logam Transisi</button>
+            </div>
+
+            <div class="spu-grid-wrapper">
+              <div class="periodic-table-grid" id="periodic-table-grid-mount"></div>
+            </div>
+          </div>
+
+          <!-- 3. Hukum-Hukum Dasar Kimia & Praktikum Virtual -->
+          <div id="materi-view-laws" class="materi-sub-view">
+            <!-- Header Ringkasan & Petunjuk Praktikum -->
+            <div class="laws-intro-card">
+              <div class="laws-intro-badge">🧪 Laboratorium Virtual Terpadu</div>
+              <h3 class="laws-intro-title">Hukum-Hukum Dasar Kimia & Praktikum Virtual</h3>
+              <p class="laws-intro-desc">
+                Pelajari konsep fundamental pada kartu teori di bawah ini, lalu klik tombol <strong>"🔬 Buka Praktikum Virtual"</strong> untuk melakukan pengujian langsung pada simulator laboratorium interaktif untuk <strong>Hukum Lavoisier (Kekekalan Massa)</strong>, <strong>Hukum Proust (Perbandingan Tetap)</strong>, dan <strong>Hukum Dalton (Kelipatan Berganda)</strong>.
+              </p>
+            </div>
+
+            <!-- Kartu Teori Hukum-Hukum Kimia (5 Hukum) -->
+            <div class="hukum-kimia-grid" id="chemical-laws-list-mount"></div>
+
+            <!-- ========================================================
+                 SUITE LABORATORIUM VIRTUAL INTERAKTIF
+                 ======================================================== -->
+            <div class="vlab-laws-container" id="vlab-laws-workspace">
+              <!-- Navigation Bar Praktikum Virtual -->
+              <div class="vlab-suite-header">
+                <div class="vlab-header-info">
+                  <div class="vlab-tag-pill">⚗️ Virtual Chemical Workbench</div>
+                  <h3 style="color:var(--text-dark); font-size:1.35rem; margin-top:0.3rem;">Workbench Praktikum Virtual Hukum Dasar Kimia</h3>
+                  <p style="font-size:0.88rem; color:var(--text-secondary);">Manipulasi massa reaktan, atur kondisi sistem, amati reaksi mikroskopis & makroskopis, dan catat data ke lembar praktikum digital.</p>
+                </div>
+
+                <div class="vlab-nav-pills" id="vlab-tab-nav">
+                  <button class="vlab-nav-btn active" data-target="vlab-pane-lavoisier">
+                    <span class="vlab-btn-icon">⚖️</span>
+                    <span class="vlab-btn-text">
+                      <strong>1. Uji Lavoisier</strong>
+                      <small>Kekekalan Massa</small>
+                    </span>
+                  </button>
+                  <button class="vlab-nav-btn" data-target="vlab-pane-proust">
+                    <span class="vlab-btn-icon">🧪</span>
+                    <span class="vlab-btn-text">
+                      <strong>2. Uji Proust</strong>
+                      <small>Perbandingan Tetap</small>
+                    </span>
+                  </button>
+                  <button class="vlab-nav-btn" data-target="vlab-pane-dalton">
+                    <span class="vlab-btn-icon">⚛️</span>
+                    <span class="vlab-btn-text">
+                      <strong>3. Uji Dalton</strong>
+                      <small>Kelipatan Berganda</small>
+                    </span>
+                  </button>
+                  <button class="vlab-nav-btn" data-target="vlab-pane-gases">
+                    <span class="vlab-btn-icon">🎈</span>
+                    <span class="vlab-btn-text">
+                      <strong>4. Gas Avogadro</strong>
+                      <small>Volume & Partikel</small>
+                    </span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- ====================================================
+                   PANE 1: PRAKTIKUM HUKUM LAVOISIER (KEKEKALAN MASSA)
+                   ==================================================== -->
+              <div class="vlab-content-pane active" id="vlab-pane-lavoisier">
+                <div class="vlab-layout-grid">
+                  <!-- Meja Kerja Neraca Digital Lavoisier -->
+                  <div class="vlab-bench-card">
+                    <div class="bench-top-bar">
+                      <span class="bench-badge">Instrument: Neraca Digital Presisi 0.01g</span>
+                      <span class="bench-status" id="lav2-status-chip">Siap Uji Reaksi</span>
+                    </div>
+
+                    <div class="lav-apparatus-stage">
+                      <!-- SVG Erlenmeyer & Balon/Sumbat -->
+                      <div class="lav-flask-container" id="lav2-flask-box">
+                        <svg viewBox="0 0 160 210" class="lav-flask-svg" id="lav2-flask-svg">
+                          <!-- Balon Gas Mengembang (Kondisi Tertutup & Reaksi Gas) -->
+                          <ellipse id="lav2-balloon" cx="80" cy="24" rx="26" ry="18" fill="#f43f5e" opacity="0" stroke="#be123c" stroke-width="2"/>
+                          <!-- Tutup Karet Labu (Stopper) -->
+                          <polygon id="lav2-stopper" points="68,36 92,36 96,52 64,52" fill="#475569" stroke="#334155" stroke-width="1.5"/>
+                          <!-- Uap Gas CO2 Keluar (Kondisi Terbuka) -->
+                          <g id="lav2-gas-fumes" opacity="0">
+                            <path d="M72,30 Q65,15 75,5" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" fill="none" class="steam-anim-1"/>
+                            <path d="M80,32 Q88,18 82,6" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" fill="none" class="steam-anim-2"/>
+                            <path d="M88,30 Q96,16 90,8" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" fill="none" class="steam-anim-3"/>
+                          </g>
+                          <!-- Labu Erlenmeyer Kaca -->
+                          <path d="M66,50 L94,50 L94,90 L145,185 C149,195, 142,202, 130,202 L30,202 C18,202, 11,195, 15,185 L66,90 Z" 
+                                fill="rgba(224, 242, 254, 0.45)" stroke="#0284c7" stroke-width="3" />
+                          <!-- Skala Ukur Kaca Labu -->
+                          <line x1="90" y1="120" x2="105" y2="120" stroke="#38bdf8" stroke-width="1.5"/>
+                          <line x1="86" y1="140" x2="114" y2="140" stroke="#38bdf8" stroke-width="1.5"/>
+                          <line x1="82" y1="160" x2="122" y2="160" stroke="#38bdf8" stroke-width="1.5"/>
+                          <line x1="78" y1="180" x2="130" y2="180" stroke="#38bdf8" stroke-width="1.5"/>
+                          <!-- Larutan Reaktan Campuran -->
+                          <path id="lav2-liquid-body" d="M22,185 Q80,180 138,185 L130,200 L30,200 Z" 
+                                fill="rgba(56, 189, 248, 0.7)" />
+                          <!-- Lapisan Endapan Putih BaSO4 -->
+                          <rect id="lav2-precipitate" x="32" y="193" width="96" height="7" rx="3" fill="#ffffff" opacity="0"/>
+                          <!-- Buih Gas Gelembung CO2 -->
+                          <g id="lav2-bubbles" opacity="0">
+                            <circle cx="50" cy="180" r="3.5" fill="#ffffff" opacity="0.9"/>
+                            <circle cx="75" cy="175" r="4.5" fill="#ffffff" opacity="0.9"/>
+                            <circle cx="95" cy="182" r="3" fill="#ffffff" opacity="0.9"/>
+                            <circle cx="110" cy="172" r="4" fill="#ffffff" opacity="0.9"/>
+                          </g>
+                        </svg>
+                      </div>
+
+                      <!-- Neraca Analitik Digital -->
+                      <div class="digital-scale-box">
+                        <div class="scale-top-plate"></div>
+                        <div class="scale-body">
+                          <div class="scale-screen">
+                            <span class="scale-led-unit">LED DISPLAY</span>
+                            <div class="scale-led-value" id="lav2-scale-display">185.00 g</div>
+                          </div>
+                          <div class="scale-badge-label">⚖️ Digital Analytic Balance (Kekekalan Massa)</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Panel Penjelasan Hasil Reaksi -->
+                    <div class="lav-result-alert" id="lav2-obs-log">
+                      <div class="alert-tip-icon">💡</div>
+                      <div class="alert-tip-content">
+                        <strong>Kondisi Awal:</strong> Labu Erlenmeyer berisi reaktan sebelum dicampur. Total massa reaktan dan wadah terukur tepat pada neraca digital. Klik <strong>"🧪 Reaksikan Zat"</strong> untuk mengamati pembuktian Hukum Lavoisier!
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Panel Kontrol & Variabel Praktikum Lavoisier -->
+                  <div class="vlab-controls-card">
+                    <h4 class="ctrl-heading">⚙️ Kontrol Variabel Reaksi Lavoisier</h4>
+
+                    <!-- 1. Pilihan Reaksi Kimia -->
+                    <div class="ctrl-group">
+                      <label class="ctrl-label">1. Pilih Jenis Reaksi Kimia:</label>
+                      <div class="radio-pill-group">
+                        <label class="radio-pill-item">
+                          <input type="radio" name="lav2-reaction" value="gas" id="lav2-rx-gas" checked>
+                          <span class="radio-pill-label">
+                            <strong>Reaksi Gas CO₂:</strong> Asam Cuka + Soda Kue
+                            <small>CH₃COOH + NaHCO₃ → CH₃COONa + H₂O + CO₂↑</small>
+                          </span>
+                        </label>
+                        <label class="radio-pill-item">
+                          <input type="radio" name="lav2-reaction" value="ppt" id="lav2-rx-ppt">
+                          <span class="radio-pill-label">
+                            <strong>Reaksi Endapan:</strong> BaCl₂ + Na₂SO₄
+                            <small>BaCl₂ (aq) + Na₂SO₄ (aq) → BaSO₄ (s)↓ + 2NaCl</small>
+                          </span>
+                        </label>
+                      </div>
+                    </div>
+
+                    <!-- 2. Pilihan Kondisi Sistem -->
+                    <div class="ctrl-group">
+                      <label class="ctrl-label">2. Pilih Kondisi Wadah (Sistem):</label>
+                      <div class="system-toggle-btns">
+                        <button type="button" class="btn-sys-toggle active" id="btn-lav2-closed">
+                          <span class="sys-icon">🔒</span>
+                          <span class="sys-text">
+                            <strong>Sistem Tertutup</strong>
+                            <small>Sumbat Karet Rapat / Gas Terperangkap</small>
+                          </span>
+                        </button>
+                        <button type="button" class="btn-sys-toggle" id="btn-lav2-open">
+                          <span class="sys-icon">🔓</span>
+                          <span class="sys-text">
+                            <strong>Sistem Terbuka</strong>
+                            <small>Tanpa Sumbat / Gas Bebas Lepas</small>
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+
+                    <!-- 3. Slider Massa Reaktan -->
+                    <div class="ctrl-group">
+                      <div class="slider-header">
+                        <label class="ctrl-label" id="lav2-label-r1">Massa Larutan A (CH₃COOH):</label>
+                        <span class="slider-val-badge" id="lav2-val-r1">50.0 g</span>
+                      </div>
+                      <input type="range" id="lav2-slider-r1" min="20" max="80" step="1" value="50" class="vlab-range-slider">
+                    </div>
+
+                    <div class="ctrl-group">
+                      <div class="slider-header">
+                        <label class="ctrl-label" id="lav2-label-r2">Massa Zat B (NaHCO₃):</label>
+                        <span class="slider-val-badge" id="lav2-val-r2">15.0 g</span>
+                      </div>
+                      <input type="range" id="lav2-slider-r2" min="5" max="30" step="1" value="15" class="vlab-range-slider">
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="vlab-actions-row">
+                      <button class="btn btn-primary" id="btn-lav2-mix">🧪 Reaksikan Zat</button>
+                      <button class="btn btn-secondary" id="btn-lav2-reset">🔄 Reset Lab</button>
+                      <button class="btn btn-accent" id="btn-lav2-log">📋 Simpan ke Tabel</button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Tabel Lembar Data Praktikum Lavoisier -->
+                <div class="vlab-table-container">
+                  <div class="table-header-row">
+                    <h4 style="font-size:1.05rem; color:var(--text-dark);">📊 Lembar Kerja Pengamatan: Uji Hukum Kekekalan Massa</h4>
+                    <button class="btn btn-sm btn-secondary" id="btn-lav2-clear-table">🗑️ Bersihkan Tabel</button>
+                  </div>
+                  <div class="table-scroll-wrapper">
+                    <table class="vlab-data-table" id="lav2-table">
+                      <thead>
+                        <tr>
+                          <th>No.</th>
+                          <th>Jenis Reaksi</th>
+                          <th>Kondisi Sistem</th>
+                          <th>Massa Reaktan (Sebelum)</th>
+                          <th>Massa Produk (Sesudah)</th>
+                          <th>Perubahan Massa (Δm)</th>
+                          <th>Status Hukum Lavoisier</th>
+                        </tr>
+                      </thead>
+                      <tbody id="lav2-tbody">
+                        <tr class="empty-row-placeholder">
+                          <td colspan="7">Belum ada data pengamatan tersimpan. Lakukan eksperimen lalu klik "Simpan ke Tabel".</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ====================================================
+                   PANE 2: PRAKTIKUM HUKUM PROUST (PERBANDINGAN TETAP)
+                   ==================================================== -->
+              <div class="vlab-content-pane" id="vlab-pane-proust">
+                <div class="vlab-layout-grid">
+                  <!-- Meja Kerja Reaktor Pembakaran Proust -->
+                  <div class="vlab-bench-card">
+                    <div class="bench-top-bar">
+                      <span class="bench-badge">Instrument: Cawan Porselen & Pembakar Bunsen</span>
+                      <span class="bench-status" id="proust-status-chip">Siap Sintesis Senyawa</span>
+                    </div>
+
+                    <div class="proust-apparatus-stage">
+                      <div class="proust-crucible-box">
+                        <svg viewBox="0 0 160 200" class="proust-crucible-svg" id="proust-svg">
+                          <!-- Tripod Kasa Asbes -->
+                          <line x1="25" y1="130" x2="135" y2="130" stroke="#475569" stroke-width="4"/>
+                          <line x1="35" y1="130" x2="20" y2="195" stroke="#334155" stroke-width="3"/>
+                          <line x1="125" y1="130" x2="140" y2="195" stroke="#334155" stroke-width="3"/>
+                          
+                          <!-- Nyala Api Bunsen Burner -->
+                          <g id="proust-flame" opacity="0.2">
+                            <path d="M80,140 C65,160 70,175 80,185 C90,175 95,160 80,140 Z" fill="#38bdf8" opacity="0.85" class="flame-inner"/>
+                            <path d="M80,132 C58,155 64,178 80,190 C96,178 102,155 80,132 Z" fill="#f59e0b" opacity="0.65" class="flame-outer"/>
+                          </g>
+
+                          <!-- Bunsen Burner Base -->
+                          <rect x="70" y="185" width="20" height="15" fill="#64748b"/>
+                          <rect x="58" y="195" width="44" height="5" fill="#334155"/>
+
+                          <!-- Asap Reaksi Pemanasan -->
+                          <g id="proust-smoke" opacity="0">
+                            <circle cx="70" cy="70" r="10" fill="#cbd5e1" opacity="0.5" class="smoke-1"/>
+                            <circle cx="85" cy="55" r="14" fill="#cbd5e1" opacity="0.4" class="smoke-2"/>
+                            <circle cx="78" cy="40" r="18" fill="#e2e8f0" opacity="0.3" class="smoke-3"/>
+                          </g>
+
+                          <!-- Cawan Porselen (Crucible) -->
+                          <path d="M40,95 Q80,135 120,95 L115,90 Q80,95 45,90 Z" fill="#f8fafc" stroke="#94a3b8" stroke-width="2.5"/>
+                          <!-- Padatan Reaktan / Produk dalam Cawan -->
+                          <path id="proust-solid-matter" d="M52,100 Q80,122 108,100 Q80,105 52,100 Z" fill="#94a3b8"/>
+                        </svg>
+                      </div>
+
+                      <!-- Status Visual Senyawa Produk -->
+                      <div class="proust-compound-display">
+                        <div class="compound-tag" id="proust-compound-formula">Fe + S → FeS</div>
+                        <div class="compound-subtext" id="proust-compound-desc">Rasio Massa Teoretis Fe : S = 7 : 4 (1.75 : 1)</div>
+                      </div>
+                    </div>
+
+                    <!-- Breakdown Stoikiometri Live Bar -->
+                    <div class="proust-breakdown-card">
+                      <div class="breakdown-title">⚖️ Analisis Komposisi Massa Reaksi:</div>
+                      <div class="stoich-bars">
+                        <!-- Bar Reaktan A -->
+                        <div class="stoich-item">
+                          <div class="stoich-header">
+                            <span id="proust-txt-elem-a">Besi (Fe) Bereaksi:</span>
+                            <strong id="proust-stat-a-reacted">0.00 g</strong>
+                          </div>
+                          <div class="stoich-progress">
+                            <div class="stoich-fill bg-blue" id="proust-bar-a" style="width: 50%;"></div>
+                          </div>
+                          <span class="stoich-rem-tag" id="proust-stat-a-rem">Sisa: 0.00 g</span>
+                        </div>
+
+                        <!-- Bar Reaktan B -->
+                        <div class="stoich-item">
+                          <div class="stoich-header">
+                            <span id="proust-txt-elem-b">Belerang (S) Bereaksi:</span>
+                            <strong id="proust-stat-b-reacted">0.00 g</strong>
+                          </div>
+                          <div class="stoich-progress">
+                            <div class="stoich-fill bg-amber" id="proust-bar-b" style="width: 50%;"></div>
+                          </div>
+                          <span class="stoich-rem-tag" id="proust-stat-b-rem">Sisa: 0.00 g</span>
+                        </div>
+
+                        <!-- Bar Produk Senyawa -->
+                        <div class="stoich-item">
+                          <div class="stoich-header">
+                            <span id="proust-txt-product">Massa Produk Senyawa (FeS):</span>
+                            <strong id="proust-stat-product" style="color:var(--accent-emerald);">0.00 g</strong>
+                          </div>
+                          <div class="stoich-progress">
+                            <div class="stoich-fill bg-emerald" id="proust-bar-product" style="width: 100%;"></div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="proust-ratio-proof-pill" id="proust-ratio-proof">
+                        <strong>Perbandingan Massa Bereaksi:</strong> 
+                        <span id="proust-ratio-result">Belum direaksikan</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Kontrol & Preset Reaktan Proust -->
+                  <div class="vlab-controls-card">
+                    <h4 class="ctrl-heading">⚙️ Kontrol Reaksi Hukum Proust</h4>
+
+                    <!-- Pilihan Senyawa -->
+                    <div class="ctrl-group">
+                      <label class="ctrl-label">1. Pilih Reaksi Pembentukan Senyawa:</label>
+                      <select class="form-control-pbl" id="proust-select-reaction">
+                        <option value="fes" selected>Besi(II) Sulfida (Fe + S → FeS) — Rasio Fe : S = 7 : 4</option>
+                        <option value="h2o">Air (2H₂ + O₂ → 2H₂O) — Rasio H : O = 1 : 8</option>
+                        <option value="mgo">Magnesium Oksida (2Mg + O₂ → 2MgO) — Rasio Mg : O = 3 : 2</option>
+                      </select>
+                    </div>
+
+                    <!-- Preset Cepat Eksperimen -->
+                    <div class="ctrl-group">
+                      <label class="ctrl-label">2. Preset Cepat Eksperimen:</label>
+                      <div class="preset-btn-group">
+                        <button class="btn btn-secondary btn-sm" id="btn-proust-pre-exact">🎯 Rasio Pas (Stoikiometris)</button>
+                        <button class="btn btn-secondary btn-sm" id="btn-proust-pre-excess-a">⚖️ Kelebihan Unsur A</button>
+                        <button class="btn btn-secondary btn-sm" id="btn-proust-pre-excess-b">⚖️ Kelebihan Unsur B</button>
+                      </div>
+                    </div>
+
+                    <!-- Slider Massa Reaktan A -->
+                    <div class="ctrl-group">
+                      <div class="slider-header">
+                        <label class="ctrl-label" id="proust-label-a">Massa Besi (Fe):</label>
+                        <span class="slider-val-badge" id="proust-val-badge-a">14.0 g</span>
+                      </div>
+                      <input type="range" id="proust-slider-a" min="1" max="35" step="0.5" value="14" class="vlab-range-slider">
+                    </div>
+
+                    <!-- Slider Massa Reaktan B -->
+                    <div class="ctrl-group">
+                      <div class="slider-header">
+                        <label class="ctrl-label" id="proust-label-b">Massa Belerang (S):</label>
+                        <span class="slider-val-badge" id="proust-val-badge-b">8.0 g</span>
+                      </div>
+                      <input type="range" id="proust-slider-b" min="1" max="35" step="0.5" value="8" class="vlab-range-slider">
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="vlab-actions-row">
+                      <button class="btn btn-primary" id="btn-proust-heat">🔥 Panaskan & Reaksikan</button>
+                      <button class="btn btn-secondary" id="btn-proust-reset">🔄 Reset</button>
+                      <button class="btn btn-accent" id="btn-proust-log">➕ Catat ke Tabel</button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Tabel Lembar Data Praktikum Proust -->
+                <div class="vlab-table-container">
+                  <div class="table-header-row">
+                    <h4 style="font-size:1.05rem; color:var(--text-dark);">📊 Lembar Pengamatan: Uji Hukum Perbandingan Tetap (Proust)</h4>
+                    <button class="btn btn-sm btn-secondary" id="btn-proust-clear-table">🗑️ Bersihkan Tabel</button>
+                  </div>
+                  <div class="table-scroll-wrapper">
+                    <table class="vlab-data-table" id="proust-table">
+                      <thead>
+                        <tr>
+                          <th>Percobaan</th>
+                          <th>Senyawa Target</th>
+                          <th>Massa Reaktan A Awal</th>
+                          <th>Massa Reaktan B Awal</th>
+                          <th>Massa Produk</th>
+                          <th>Zat Bersisa (Sisa)</th>
+                          <th>Rasio Massa Bereaksi</th>
+                          <th>Status Hukum Proust</th>
+                        </tr>
+                      </thead>
+                      <tbody id="proust-tbody">
+                        <tr class="empty-row-placeholder">
+                          <td colspan="8">Belum ada data pengamatan. Variasikan massa reaktan lalu klik "Catat ke Tabel".</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ====================================================
+                   PANE 3: PRAKTIKUM HUKUM DALTON (KELIPATAN BERGANDA)
+                   ==================================================== -->
+              <div class="vlab-content-pane" id="vlab-pane-dalton">
+                <div class="vlab-layout-grid">
+                  <!-- Meja Kerja Dual-Chamber Reactor Dalton -->
+                  <div class="vlab-bench-card">
+                    <div class="bench-top-bar">
+                      <span class="bench-badge">Instrument: Dual Parallel Synthesis Reactor</span>
+                      <span class="bench-status" id="dalton-status-chip">Siap Uji Senyawa Ganda</span>
+                    </div>
+
+                    <!-- Dual Chamber Side by Side Visualization -->
+                    <div class="dalton-dual-stage">
+                      <!-- Chamber 1: Senyawa I -->
+                      <div class="dalton-chamber-box">
+                        <div class="chamber-header-tag">Reaktor A: Senyawa I</div>
+                        <div class="chamber-formula-tag" id="dalton-ch1-formula">CO (Karbon Monoksida)</div>
+                        
+                        <div class="molecule-stage" id="dalton-mol-1">
+                          <!-- Model Molekul Senyawa 1 -->
+                          <svg viewBox="0 0 120 100" class="molecule-svg">
+                            <circle cx="45" cy="50" r="22" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+                            <text x="45" y="55" fill="#ffffff" font-size="12" font-weight="700" text-anchor="middle">C</text>
+                            
+                            <line x1="60" y1="50" x2="75" y2="50" stroke="#94a3b8" stroke-width="4"/>
+                            
+                            <circle cx="85" cy="50" r="18" fill="#ef4444" stroke="#b91c1c" stroke-width="2"/>
+                            <text x="85" y="55" fill="#ffffff" font-size="12" font-weight="700" text-anchor="middle">O</text>
+                          </svg>
+                        </div>
+
+                        <div class="chamber-data-pill">
+                          <div>Massa Unsur 1: <strong id="dalton-mass-c1-e1">12.0 g</strong></div>
+                          <div>Massa Unsur 2: <strong id="dalton-mass-c1-e2" style="color:var(--accent-rose);">16.0 g</strong></div>
+                        </div>
+                      </div>
+
+                      <div class="dalton-vs-divider">VS</div>
+
+                      <!-- Chamber 2: Senyawa II -->
+                      <div class="dalton-chamber-box">
+                        <div class="chamber-header-tag">Reaktor B: Senyawa II</div>
+                        <div class="chamber-formula-tag" id="dalton-ch2-formula">CO₂ (Karbon Dioksida)</div>
+                        
+                        <div class="molecule-stage" id="dalton-mol-2">
+                          <!-- Model Molekul Senyawa 2 -->
+                          <svg viewBox="0 0 140 100" class="molecule-svg">
+                            <circle cx="28" cy="50" r="18" fill="#ef4444" stroke="#b91c1c" stroke-width="2"/>
+                            <text x="28" y="55" fill="#ffffff" font-size="12" font-weight="700" text-anchor="middle">O</text>
+
+                            <line x1="42" y1="50" x2="56" y2="50" stroke="#94a3b8" stroke-width="4"/>
+
+                            <circle cx="70" cy="50" r="22" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+                            <text x="70" y="55" fill="#ffffff" font-size="12" font-weight="700" text-anchor="middle">C</text>
+
+                            <line x1="84" y1="50" x2="98" y2="50" stroke="#94a3b8" stroke-width="4"/>
+
+                            <circle cx="112" cy="50" r="18" fill="#ef4444" stroke="#b91c1c" stroke-width="2"/>
+                            <text x="112" y="55" fill="#ffffff" font-size="12" font-weight="700" text-anchor="middle">O</text>
+                          </svg>
+                        </div>
+
+                        <div class="chamber-data-pill">
+                          <div>Massa Unsur 1: <strong id="dalton-mass-c2-e1">12.0 g</strong></div>
+                          <div>Massa Unsur 2: <strong id="dalton-mass-c2-e2" style="color:var(--accent-rose);">32.0 g</strong></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Box Pembuktian Matematis Dalton -->
+                    <div class="dalton-proof-box" id="dalton-proof-card">
+                      <div class="proof-step">
+                        <span class="step-num">Langkah 1:</span>
+                        <span>Massa unsur pertama dibuat sama: <strong id="dalton-txt-ref-fixed">Massa Karbon = 12.0 gram</strong></span>
+                      </div>
+                      <div class="proof-step">
+                        <span class="step-num">Langkah 2:</span>
+                        <span>Massa unsur kedua yang bereaksi: <strong id="dalton-txt-e2-comp">16.0 g (CO) : 32.0 g (CO₂)</strong></span>
+                      </div>
+                      <div class="proof-step highlight">
+                        <span class="step-num">Langkah 3:</span>
+                        <span>Penyederhanaan Rasio: <strong id="dalton-txt-ratio-reduced" style="font-size:1.15rem; color:var(--accent-blue);">1 : 2</strong></span>
+                      </div>
+                      <div class="proof-verdict">
+                        ✅ <strong>HUKUM DALTON TERBUKTI:</strong> Rasio massa unsur kedua berbanding sebagai bilangan bulat dan sederhana!
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Kontrol & Evaluasi Mandiri Dalton -->
+                  <div class="vlab-controls-card">
+                    <h4 class="ctrl-heading">⚙️ Kontrol Sistem Hukum Dalton</h4>
+
+                    <!-- Pilihan Pasangan Senyawa -->
+                    <div class="ctrl-group">
+                      <label class="ctrl-label">1. Pilih Pasangan Senyawa Dua Unsur:</label>
+                      <select class="form-control-pbl" id="dalton-select-system">
+                        <option value="c_o" selected>Sistem Karbon + Oksigen (CO & CO₂)</option>
+                        <option value="n_o">Sistem Nitrogen + Oksigen (NO & NO₂)</option>
+                        <option value="s_o">Sistem Belerang + Oksigen (SO₂ & SO₃)</option>
+                      </select>
+                    </div>
+
+                    <!-- Slider Pengatur Massa Unsur Acuan -->
+                    <div class="ctrl-group">
+                      <div class="slider-header">
+                        <label class="ctrl-label" id="dalton-label-ref-mass">Massa Unsur Pertama yang Ditetapkan (C):</label>
+                        <span class="slider-val-badge" id="dalton-val-ref-mass">12.0 g</span>
+                      </div>
+                      <input type="range" id="dalton-slider-ref" min="6" max="36" step="6" value="12" class="vlab-range-slider">
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="vlab-actions-row">
+                      <button class="btn btn-primary" id="btn-dalton-run">⚗️ Jalankan Sintesis Paralel</button>
+                      <button class="btn btn-secondary" id="btn-dalton-reset">🔄 Reset Reaktor</button>
+                    </div>
+
+                    <!-- Kuis Interaktif Pemahaman Dalton -->
+                    <div class="dalton-quiz-mini-card">
+                      <h5>🧠 Cek Pemahaman Cepat Dalton:</h5>
+                      <p id="dalton-quiz-question" style="font-size:0.86rem; color:var(--text-secondary); margin-bottom:0.6rem;">
+                        Jika massa Karbon dinaikkan menjadi 24 gram, berapakah perbandingan rasio massa Oksigen pada CO dan CO₂?
+                      </p>
+                      <div class="quiz-options-grid" id="dalton-quiz-options">
+                        <button class="btn-quiz-opt" data-opt="1:2">1 : 2</button>
+                        <button class="btn-quiz-opt" data-opt="2:3">2 : 3</button>
+                        <button class="btn-quiz-opt" data-opt="1:4">1 : 4</button>
+                      </div>
+                      <div id="dalton-quiz-feedback" class="quiz-feedback-box" style="display:none;"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ====================================================
+                   PANE 4: GAS IDEAL (AVOGADRO & GAY-LUSSAC)
+                   ==================================================== -->
+              <div class="vlab-content-pane" id="vlab-pane-gases">
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;">
+                  <!-- Kalkulator Avogadro -->
+                  <div class="hukum-card">
+                    <h4>🎈 Hipotesis Avogadro: Volume & Jumlah Partikel (STP)</h4>
+                    <p style="font-size:0.84rem; color:var(--text-secondary); margin-bottom:0.75rem;">
+                      Pada suhu 0°C dan tekanan 1 atm (STP), 1 mol gas apa pun bervolume tepat 22.4 Liter dan mengandung 6.022 × 10²³ molekul.
+                    </p>
+                    <div style="margin-bottom:0.75rem;">
+                      <label style="font-size:0.82rem; font-weight:700; color:var(--text-dark);">Jumlah Mol Gas (n):</label>
+                      <input type="number" id="input-avo-mol" class="form-control-pbl" placeholder="Jumlah Mol Gas" value="2.5" step="0.1">
+                    </div>
+                    <button class="btn btn-primary btn-sm" id="btn-calc-avogadro">Hitung Volume & Partikel STP</button>
+                    <div id="res-calc-avogadro" style="margin-top:0.75rem; font-size:0.86rem;"></div>
+                  </div>
+
+                  <!-- Kalkulator Gay-Lussac -->
+                  <div class="hukum-card">
+                    <h4>💨 Hukum Perbandingan Volume Gay-Lussac</h4>
+                    <p style="font-size:0.84rem; color:var(--text-secondary); margin-bottom:0.75rem;">
+                      Reaksi: 2 H₂ (g) + O₂ (g) → 2 H₂O (g). Rasio volume gas yang bereaksi dan dihasilkan sama dengan rasio koefisien reaksinya.
+                    </p>
+                    <div style="margin-bottom:0.75rem;">
+                      <label style="font-size:0.82rem; font-weight:700; color:var(--text-dark);">Volume Gas Hidrogen (H₂) yang Disediakan (Liter):</label>
+                      <input type="number" id="input-gl-vol" class="form-control-pbl" placeholder="Volume H2 (L)" value="10" step="1">
+                    </div>
+                    <button class="btn btn-accent btn-sm" id="btn-calc-gaylussac">Hitung Volume O₂ & H₂O</button>
+                    <div id="res-calc-gaylussac" style="margin-top:0.75rem; font-size:0.86rem;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="page-nav-footer">
+            <button class="btn btn-secondary btn-page-prev">← Modul 4: Alat 3D</button>
+            <button class="btn btn-primary btn-page-next">Lanjut ke Modul 6: Praktikum Sederhana →</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- -------------------------------------------------------------
+           HALAMAN 6: PRAKTIKUM SEDERHANA (3 SIMULASI LAB INTERAKTIF)
+           ------------------------------------------------------------- -->
+      <section id="page-module-6" class="page-view">
+        <div class="glass-panel">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <h2>🧪 Praktikum Sederhana (Virtual Lab Simulations)</h2>
+              <p>Eksperimen virtual interaktif yang dapat dimanipulasi langsung oleh siswa: Uji Hukum Kekekalan Massa Lavoisier, Uji Nyala Api Spektrum Kation, dan Titrasi Asam-Basa.</p>
+            </div>
+            <span class="badge-tag">Hands-on Virtual Experiments</span>
+          </div>
+
+          <!-- Tab Pilihan Eksperimen -->
+          <div class="sim-tabs">
+            <button class="btn btn-secondary sim-tab-btn active" data-target="sim-view-lavoisier">⚖️ 1. Uji Neraca Lavoisier</button>
+            <button class="btn btn-secondary sim-tab-btn" data-target="sim-view-flame">🔥 2. Uji Nyala Api Unsur</button>
+            <button class="btn btn-secondary sim-tab-btn" data-target="sim-view-titration">💧 3. Titrasi Asam-Basa</button>
+          </div>
+
+          <!-- Shortcut Banner Lab Hukum-Hukum Kimia (Lavoisier, Proust, Dalton) -->
+          <div style="background:linear-gradient(135deg, #eff6ff 0%, #e0f2fe 100%); border:1.5px solid #7dd3fc; border-radius:var(--radius-md); padding:0.9rem 1.2rem; margin-bottom:1.5rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem; box-shadow:var(--shadow-sm);">
+            <div style="font-size:0.88rem; color:var(--text-dark); display:flex; align-items:center; gap:0.6rem;">
+              <span style="font-size:1.4rem;">⚗️</span>
+              <div>
+                <strong>Praktikum Virtual Hukum Dasar Kimia (Lavoisier, Proust & Dalton):</strong><br>
+                <span style="color:var(--text-secondary); font-size:0.82rem;">Eksperimen digital pembuktian Hukum Kekekalan Massa, Hukum Perbandingan Tetap, dan Kelipatan Berganda.</span>
+              </div>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="window.App.navigateToModule(5); setTimeout(() => { const btn = document.querySelector('[data-target=\'materi-view-laws\']'); if(btn) btn.click(); }, 150);">
+              🔬 Buka Lab Hukum Dasar Kimia →
+            </button>
+          </div>
+
+          <!-- SIMULASI 1: LAVOISIER BALANCE -->
+          <div id="sim-view-lavoisier" class="sim-view-pane active">
+            <div class="sim-workspace-layout">
+              <div class="sim-interactive-bench">
+                <!-- Neraca Digital -->
+                <div class="digital-scale">
+                  <div class="scale-pan">
+                    <!-- Erlenmeyer di atas timbangan -->
+                    <div id="lav-flask-graphic" style="position:relative; width:90px; height:110px; margin: -100px auto 0;">
+                      <svg viewBox="0 0 100 120" style="width:100%; height:100%;">
+                        <!-- Labu Erlenmeyer Bersekat -->
+                        <path d="M40 10 L60 10 L60 35 L90 105 C95 115, 85 120, 75 120 L25 120 C15 120, 5 115, 10 105 L40 35 Z" fill="rgba(224, 242, 254, 0.6)" stroke="#0369a1" stroke-width="2.5"/>
+                        <!-- Tutup Karet Labu -->
+                        <rect id="lav-flask-stopper" x="38" y="4" width="24" height="10" rx="2" fill="#475569"/>
+                        <!-- Cairan Campuran -->
+                        <path d="M16 100 C30 90, 70 90, 84 100 L75 118 L25 118 Z" fill="#38bdf8" opacity="0.75"/>
+                        <!-- Lapisan Endapan Putih BaSO4 -->
+                        <rect id="lav-precipitate-layer" x="22" y="112" width="56" height="0" rx="2" fill="#ffffff"/>
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="scale-display" id="lav-scale-readout">217.70 g</div>
+                </div>
+
+                <div class="sim-bench-surface"></div>
+              </div>
+
+              <!-- Kontrol Simulasi Lavoisier -->
+              <div class="sim-controls-panel">
+                <h4>Reaksi: BaCl₂ (aq) + Na₂SO₄ (aq) → BaSO₄ (s) ↓ + 2 NaCl (aq)</h4>
+                
+                <div>
+                  <label style="font-size:0.84rem; font-weight:700; color:var(--text-dark); display:block; margin-bottom:0.4rem;">
+                    Pilih Kondisi Sistem:
+                  </label>
+                  <div style="display:flex; gap:0.5rem;">
+                    <button class="btn btn-secondary btn-sm active" id="btn-lav-closed">🔒 Sistem Tertutup (Ber-sumbat)</button>
+                    <button class="btn btn-secondary btn-sm" id="btn-lav-open">🔓 Sistem Terbuka (Tanpa Sumbat)</button>
+                  </div>
+                </div>
+
+                <div style="display:flex; gap:0.5rem;">
+                  <button class="btn btn-primary" id="btn-lav-mix">🔄 Campurkan Reaktan</button>
+                  <button class="btn btn-secondary" id="btn-lav-reset">Reset</button>
+                </div>
+
+                <!-- Log Observasi -->
+                <div>
+                  <h5 style="font-size:0.9rem; color:var(--text-dark); margin-bottom:0.4rem;">Log Pengamatan Digital:</h5>
+                  <div id="lav-obs-log">
+                    <p style="font-size:0.84rem; color:var(--text-muted);">Belum ada reaksi yang dicampurkan. Klik tombol "Campurkan Reaktan".</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SIMULASI 2: UJI NYALA API LOGAM -->
+          <div id="sim-view-flame" class="sim-view-pane">
+            <div class="sim-workspace-layout">
+              <div class="sim-interactive-bench">
+                <!-- Bunsen Rig -->
+                <div class="bunsen-rig">
+                  <div class="flame-particle-box">
+                    <div class="flame-core" id="sim-flame-core"></div>
+                  </div>
+                  <div class="bunsen-burner-body"></div>
+                  <div class="bunsen-base"></div>
+                </div>
+
+                <!-- Kawat Nikrom -->
+                <div id="sim-nichrome-wire" style="position:absolute; top:120px; left:220px; width:120px; height:8px; background:#cbd5e1; border-radius:4px; transform-origin:left center; transition:transform 0.4s ease; z-index:10; box-shadow:0 2px 4px rgba(0,0,0,0.2);">
+                  <div style="position:absolute; right:0; top:-4px; width:16px; height:16px; border:2px solid #94a3b8; border-radius:50%;"></div>
+                </div>
+
+                <div class="sim-bench-surface"></div>
+              </div>
+
+              <!-- Kontrol Flame Test -->
+              <div class="sim-controls-panel">
+                <h4>Pilih Garam Sampel Kation Logam:</h4>
+                <div id="flame-ions-picker-mount" style="display:flex; flex-wrap:wrap; gap:0.4rem;"></div>
+                <div id="flame-ion-info-mount"></div>
+
+                <div style="display:flex; gap:0.5rem;">
+                  <button class="btn btn-primary" id="btn-flame-test">🔥 Dekatkan Kawat ke Api Bunsen</button>
+                  <button class="btn btn-secondary" id="btn-flame-clean">Bilas Kawat (HCl)</button>
+                </div>
+
+                <div id="flame-result-box" style="margin-top:0.5rem;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SIMULASI 3: TITRASI ASAM-BASA -->
+          <div id="sim-view-titration" class="sim-view-pane">
+            <div class="sim-workspace-layout">
+              <div class="sim-interactive-bench">
+                <!-- Titration Rig -->
+                <div class="titration-rig">
+                  <div class="titration-base-iron"></div>
+                  <div class="titration-stand"></div>
+
+                  <!-- Buret -->
+                  <div class="burette-tube">
+                    <div class="burette-liquid" id="burette-liquid-level"></div>
+                  </div>
+
+                  <!-- Kran Buret -->
+                  <div class="burette-stopcock" id="burette-stopcock-btn">KRAN</div>
+
+                  <!-- Tetesan Animasi -->
+                  <div id="titration-drop-anim" style="position:absolute; left:96px; top:295px; width:6px; height:10px; background:#38bdf8; border-radius:50%; opacity:0; transition:all 0.3s ease;"></div>
+
+                  <!-- Erlenmeyer Bawah -->
+                  <div class="flask-titration">
+                    <svg viewBox="0 0 70 90" style="width:100%; height:100%;">
+                      <path d="M28 5 L42 5 L42 25 L65 75 C68 82, 60 86, 54 86 L16 86 C10 86, 2 82, 5 75 L28 25 Z" fill="rgba(255,255,255,0.7)" stroke="#64748b" stroke-width="2"/>
+                      <path id="flask-titration-liquid" d="M12 70 C22 65, 48 65, 58 70 L54 84 L16 84 Z" fill="rgba(224, 242, 254, 0.4)" style="transition:fill 0.4s ease;"/>
+                    </svg>
+                  </div>
+                </div>
+
+                <div class="sim-bench-surface"></div>
+              </div>
+
+              <!-- Kontrol Titrasi -->
+              <div class="sim-controls-panel">
+                <h4>Analit: 20 mL HCl + Indikator Fenolftalein (PP)<br>Titran: NaOH 0.1 M pada Buret</h4>
+                
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:0.75rem;">
+                  <span style="font-size:0.84rem; color:var(--text-muted);">Volume Titran NaOH Tertetes:</span>
+                  <div id="titrate-vol-readout" style="font-family:var(--font-mono); font-size:1.6rem; font-weight:800; color:var(--accent-blue);">0.0 mL</div>
+                </div>
+
+                <div style="display:flex; gap:0.5rem;">
+                  <button class="btn btn-primary btn-sm" id="btn-titrate-drop-1">+ Teteskan 1.0 mL</button>
+                  <button class="btn btn-accent btn-sm" id="btn-titrate-drop-fine">+ Tetes Halus 0.1 mL</button>
+                  <button class="btn btn-secondary btn-sm" id="btn-titrate-reset">Reset</button>
+                </div>
+
+                <div id="titrate-log-mount" style="margin-top:0.5rem;"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="page-nav-footer">
+            <button class="btn btn-secondary btn-page-prev">← Modul 5: Materi Kimia</button>
+            <button class="btn btn-primary btn-page-next">Lanjut ke Modul 7: Video & LKPD PBL →</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- -------------------------------------------------------------
+           HALAMAN 7: VIDEO SIMULASI KESALAHAN LAB & LKPD PBL
+           ------------------------------------------------------------- -->
+      <section id="page-module-7" class="page-view">
+        <div class="glass-panel">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <h2>🎥 Video Simulasi Kesalahan Praktikum & LKPD Problem-Based Learning</h2>
+              <p>Tonton video analisis insiden kelalaian di laboratorium dan selesaikan Lembar Kerja Peserta Didik (LKPD) terintegrasi 5 sintaks pembelajaran berbasis masalah.</p>
+            </div>
+            <span class="badge-tag">PBL Integrated Learning</span>
+          </div>
+
+          <div class="pbl-layout">
+            <!-- Video Card Frame -->
+            <div class="video-card-wrapper">
+              <div class="video-player-frame">
+                <!-- Embed YouTube URL sesuai instruksi pengguna -->
+                <iframe 
+                  src="https://www.youtube.com/embed/BbE__JY1BfE" 
+                  title="Simulasi Kesalahan dalam Laboratorium Kimia" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                  allowfullscreen>
+                </iframe>
+              </div>
+              <div class="video-info-box">
+                <div>
+                  <h4 style="font-size:1.15rem; color:var(--text-dark);">Studi Kasus: Analisis Pelanggaran Prosedur di Laboratorium Kimia</h4>
+                  <p style="font-size:0.86rem; color:var(--text-secondary);">Perhatikan setiap adegan: kelalaian penggunaan APD, cara memanaskan cairan, tumpahan asam, dan kepanikan praktikan.</p>
+                </div>
+                <span class="badge-tag">Waktu Tayang: 3 Menit</span>
+              </div>
+            </div>
+
+            <!-- FORMULIR LKPD PBL INTERAKTIF -->
+            <div class="lkpd-container">
+              <div class="lkpd-header">
+                <h3>LEMBAR KERJA PESERTA DIDIK (LKPD) KIMIA</h3>
+                <p>Pendekatan: Problem-Based Learning (PBL) &bull; Materi: Keselamatan Kerja & Praktikum Kimia</p>
+                <div style="font-size:0.82rem; color:var(--accent-blue); font-weight:700; margin-top:0.3rem;">
+                  Guru Pembimbing: Fatma Alawiyah, S.Pd.,Gr (NIP: 200103272025212017)
+                </div>
+              </div>
+
+              <!-- Identitas Siswa -->
+              <div class="student-meta-grid">
+                <div class="form-group-pbl">
+                  <label for="lkpd-nama">Nama Lengkap Siswa:</label>
+                  <input type="text" id="lkpd-nama" class="form-control-pbl" placeholder="Ketik nama lengkap Anda...">
+                </div>
+                <div class="form-group-pbl">
+                  <label for="lkpd-kelas">Kelas / Semester:</label>
+                  <input type="text" id="lkpd-kelas" class="form-control-pbl" placeholder="Contoh: X IPA 1 / Ganjil">
+                </div>
+                <div class="form-group-pbl">
+                  <label for="lkpd-kelompok">Kelompok Praktikum:</label>
+                  <input type="text" id="lkpd-kelompok" class="form-control-pbl" placeholder="Contoh: Kelompok 3 (Lavoisier)">
+                </div>
+                <div class="form-group-pbl">
+                  <label for="lkpd-tanggal">Tanggal Praktikum:</label>
+                  <input type="date" id="lkpd-tanggal" class="form-control-pbl">
+                </div>
+              </div>
+
+              <form id="lkpd-pbl-form">
+                <!-- Fase 1: Orientasi Siswa pada Masalah -->
+                <div class="pbl-phase-block">
+                  <span class="phase-tag">Fase 1: Orientasi Siswa pada Masalah</span>
+                  <h4>1. Identifikasi Insiden & Kesalahan Fatal</h4>
+                  <p class="guideline-text">Berdasarkan tayangan video simulasi di atas, sebutkan dan analisislah minimal 3 tindakan kelalaian/kesalahan fatal yang dilakukan oleh praktikan:</p>
+                  <textarea id="lkpd-fase1" class="form-control-pbl pbl-textarea" placeholder="Tuliskan hasil observasi Anda di sini... (Contoh: Praktikan tidak mengenakan kacamata pengaman saat memanaskan cairan, mencium bau uap secara langsung...)"></textarea>
+                </div>
+
+                <!-- Fase 2: Mengorganisasikan Siswa untuk Belajar -->
+                <div class="pbl-phase-block">
+                  <span class="phase-tag">Fase 2: Mengorganisasi Siswa untuk Belajar</span>
+                  <h4>2. Rumusan Masalah Ilmiah</h4>
+                  <p class="guideline-text">Rumuskan pertanyaan masalah ilmiah terkait risiko keselamatan praktikum dan bahaya zat kimia yang terjadi pada video tersebut:</p>
+                  <textarea id="lkpd-fase2" class="form-control-pbl pbl-textarea" placeholder="Rumuskan masalah dalam bentuk kalimat tanya... (Contoh: Bagaimana dampak paparan uap zat kimia korosif terhadap saluran pernapasan tanpa masker respirator?)"></textarea>
+                </div>
+
+                <!-- Fase 3: Membimbing Penyelidikan Mandiri dan Kelompok -->
+                <div class="pbl-phase-block">
+                  <span class="phase-tag">Fase 3: Membimbing Penyelidikan Mandiri/Kelompok</span>
+                  <h4>3. Analisis Pelanggaran SOP & Kajian MSDS</h4>
+                  <p class="guideline-text">Kaitkan insiden video dengan materi Modul 2 (APD), Modul 3 (SOP Lab), dan Lembar Data Keselamatan Bahan (MSDS). Aturan baku apa saja yang telah dilanggar?</p>
+                  <textarea id="lkpd-fase3" class="form-control-pbl pbl-textarea" placeholder="Tuliskan analisis pelanggaran SOP dan bahaya zat berdasarkan MSDS..."></textarea>
+                </div>
+
+                <!-- Fase 4: Mengembangkan dan Menyajikan Hasil Karya -->
+                <div class="pbl-phase-block">
+                  <span class="phase-tag">Fase 4: Mengembangkan & Menyajikan Hasil Karya</span>
+                  <h4>4. Rencana Aksi Pencegahan & Prosedur Tanggap Darurat</h4>
+                  <p class="guideline-text">Rancanglah solusi konkret perbaikan SOP meja lab serta langkah tanggap darurat yang harus diambil saat tumpahan asam atau kebakaran terjadi (termasuk teknik APAR PASS):</p>
+                  <textarea id="lkpd-fase4" class="form-control-pbl pbl-textarea" placeholder="Tuliskan rancangan solusi preventif dan urutan prosedur tanggap darurat..."></textarea>
+                </div>
+
+                <!-- Fase 5: Menganalisis dan Mengevaluasi Proses Pemecahan Masalah -->
+                <div class="pbl-phase-block">
+                  <span class="phase-tag">Fase 5: Menganalisis & Mengevaluasi Pemecahan Masalah</span>
+                  <h4>5. Refleksi Kritis Pemecahan Masalah</h4>
+                  <p class="guideline-text">Lakukan evaluasi kritis: Mengapa budaya keselamatan kerja (safety culture) jauh lebih berharga daripada kecepatan menyelesaikan praktikum di laboratorium?</p>
+                  <textarea id="lkpd-fase5" class="form-control-pbl pbl-textarea" placeholder="Tuliskan refleksi kritis dan kesimpulan Anda..."></textarea>
+                </div>
+              </form>
+
+              <!-- Footer Actions LKPD -->
+              <div class="lkpd-actions-footer">
+                <span id="lkpd-save-status" style="margin-right:auto; font-size:0.82rem; color:var(--text-muted);">💾 Belum disimpan.</span>
+                <button class="btn btn-secondary" id="btn-reset-lkpd">Kosongkan Form</button>
+                <button class="btn btn-secondary" id="btn-print-lkpd">🖨️ Cetak / Unduh LKPD (PDF)</button>
+                <button class="btn btn-primary" id="btn-save-lkpd">💾 Simpan LKPD ke Sistem</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="page-nav-footer">
+            <button class="btn btn-secondary btn-page-prev">← Modul 6: Praktikum Sederhana</button>
+            <button class="btn btn-primary btn-page-next">Lanjut ke Modul 8: Kuis Evaluasi →</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- -------------------------------------------------------------
+           HALAMAN 8: KUIS EVALUASI INTERAKTIF
+           ------------------------------------------------------------- -->
+      <section id="page-module-8" class="page-view">
+        <div class="glass-panel">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <h2>📝 Kuis Evaluasi Pemahaman Laboratorium Kimia</h2>
+              <p>Uji pemahaman Anda melalui 15 butir soal pilihan ganda berkualitas tinggi. Skor minimal kelulusan penerbitan sertifikat adalah <strong>KKM: 75</strong>.</p>
+            </div>
+            <span class="badge-tag">Evaluasi Kognitif</span>
+          </div>
+
+          <div class="quiz-container">
+            <!-- Header Bar Kuis -->
+            <div class="quiz-header-bar">
+              <span class="quiz-progress-badge" id="quiz-counter-badge">Soal 1 dari 15</span>
+              <div class="quiz-timer-pill">
+                <span>⏱️</span> Sisa Waktu: <span id="quiz-timer-text">15:00</span>
+              </div>
+            </div>
+
+            <!-- Kartu Soal Aktif -->
+            <div id="quiz-active-card">
+              <div class="quiz-question-box">
+                <h3 id="quiz-question-title">1. Pertanyaan Kuis Kimia...</h3>
+              </div>
+
+              <!-- Daftar Opsi Jawaban -->
+              <div class="quiz-options-list" id="quiz-options-mount"></div>
+
+              <!-- Pembahasan Soal (Setelah Submit) -->
+              <div class="quiz-explanation-box" id="quiz-explanation-box"></div>
+
+              <!-- Navigasi Soal Kuis -->
+              <div style="display:flex; justify-content:space-between; align-items:center; gap:1rem;">
+                <button class="btn btn-secondary" id="btn-quiz-prev">← Sebelumnya</button>
+                <div style="display:flex; gap:0.5rem;">
+                  <button class="btn btn-outline" id="btn-quiz-submit">Kumpulkan Kuis</button>
+                  <button class="btn btn-primary" id="btn-quiz-next">Berikutnya →</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kartu Hasil Kuis (Setelah Submit) -->
+            <div class="quiz-result-card" id="quiz-result-card">
+              <div class="score-circle">
+                <span class="score-num" id="quiz-score-num">85</span>
+                <span class="score-label">Skor Akhir</span>
+              </div>
+
+              <div id="quiz-score-msg"></div>
+
+              <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+                <button class="btn btn-secondary" id="btn-quiz-retry">🔄 Ulangi Kuis</button>
+                <button class="btn btn-primary" onclick="window.App.navigateToModule(9)">
+                  Lanjut ke Modul 9: Refleksi Siswa →
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="page-nav-footer">
+            <button class="btn btn-secondary btn-page-prev">← Modul 7: Video & LKPD</button>
+            <button class="btn btn-primary btn-page-next">Lanjut ke Modul 9: Refleksi Siswa →</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- -------------------------------------------------------------
+           HALAMAN 9: REFLEKSI SISWA
+           ------------------------------------------------------------- -->
+      <section id="page-module-9" class="page-view">
+        <div class="glass-panel">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <h2>💡 Refleksi Belajar Siswa (Model 3-2-1)</h2>
+              <p>Ungkapkan pengalaman belajar Anda, evaluasi kepuasan penggunaan laboratorium virtual, dan teguhkan komitmen keselamatan praktikum Anda.</p>
+            </div>
+            <span class="badge-tag">Metacognitive Reflection</span>
+          </div>
+
+          <div class="reflection-container">
+            <!-- 3 Hal Baru yang Dipelajari -->
+            <div class="reflection-section-card">
+              <h4>🎯 3 Pengetahuan atau Keterampilan Baru yang Saya Dapatkan:</h4>
+              <div class="reflection-inputs-group">
+                <input type="text" id="ref-learn-1" class="form-control-pbl" placeholder="1. Pengetahuan baru pertama...">
+                <input type="text" id="ref-learn-2" class="form-control-pbl" placeholder="2. Pengetahuan baru kedua...">
+                <input type="text" id="ref-learn-3" class="form-control-pbl" placeholder="3. Pengetahuan baru ketiga...">
+              </div>
+            </div>
+
+            <!-- 2 Hal yang Paling Menarik -->
+            <div class="reflection-section-card">
+              <h4>🌟 2 Fitur atau Pengalaman yang Paling Menarik Bagi Saya:</h4>
+              <div class="reflection-inputs-group">
+                <input type="text" id="ref-interest-1" class="form-control-pbl" placeholder="1. Hal menarik pertama (misal: simulator model atom Bohr, uji nyala api...)">
+                <input type="text" id="ref-interest-2" class="form-control-pbl" placeholder="2. Hal menarik kedua...">
+              </div>
+            </div>
+
+            <!-- 1 Pertanyaan / Hal yang Ingin Didalami -->
+            <div class="reflection-section-card">
+              <h4>❓ 1 Pertanyaan atau Materi yang Masih Ingin Saya Dalami Lebih Lanjut:</h4>
+              <div class="reflection-inputs-group">
+                <textarea id="ref-question-1" class="form-control-pbl" placeholder="Tuliskan rasa ingin tahu ilmiah Anda di sini..."></textarea>
+              </div>
+            </div>
+
+            <!-- Rating Kepuasan Media -->
+            <div class="reflection-section-card" style="text-align:center;">
+              <h4>⭐ Skala Kepuasan Pengalaman Belajar di Laboratorium Virtual:</h4>
+              <div style="font-size: 2.2rem; color:#f59e0b; cursor:pointer; margin:0.5rem 0;" id="star-rating-box">
+                <span class="star-rating-btn" data-star="1">★</span>
+                <span class="star-rating-btn" data-star="2">★</span>
+                <span class="star-rating-btn" data-star="3">★</span>
+                <span class="star-rating-btn" data-star="4">★</span>
+                <span class="star-rating-btn" data-star="5">★</span>
+              </div>
+              <p style="font-size:0.84rem; color:var(--text-secondary);">Klik pada bintang untuk memberikan penilaian kepuasan.</p>
+            </div>
+
+            <!-- Janji Keselamatan Praktikan -->
+            <div class="pledge-box">
+              <p>
+                "Saya berjanji akan senantiasa mematuhi standar keselamatan kerja laboratorium kimia, mengenakan APD lengkap, bersikap teliti, dan bertanggung jawab terhadap keamanan diri serta lingkungan."
+              </p>
+              <label style="display:inline-flex; align-items:center; gap:0.5rem; font-weight:700; color:var(--text-dark); cursor:pointer;">
+                <input type="checkbox" id="ref-pledge-check" style="width:18px; height:18px; accent-color:#0284c7;">
+                <span>Saya Membaca dan Berkomitmen Penuh Terhadap Janji Keselamatan Ini</span>
+              </label>
+            </div>
+
+            <div style="text-align:center; margin-top:2rem;">
+              <button class="btn btn-primary btn-lg" id="btn-save-reflection">
+                💾 Simpan Refleksi & Komitmen Belajar
+              </button>
+            </div>
+          </div>
+
+          <div class="page-nav-footer">
+            <button class="btn btn-secondary btn-page-prev">← Modul 8: Kuis Evaluasi</button>
+            <button class="btn btn-primary btn-page-next">Lanjut ke Modul 10: Cetak Sertifikat →</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- -------------------------------------------------------------
+           HALAMAN 10: PENUTUP & CETAK SERTIFIKAT KELULUSAN
+           ------------------------------------------------------------- -->
+      <section id="page-module-10" class="page-view">
+        <div class="glass-panel">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <h2>🏆 Penutup & Cetak Sertifikat Kelulusan Resmi</h2>
+              <p>Selamat atas keberhasilan Anda menuntaskan pembelajaran laboratorium virtual kimia interaktif. Terbitkan piagam penghargaan resmi digital Anda sekarang!</p>
+            </div>
+            <span class="badge-tag">Official Certification</span>
+          </div>
+
+          <div class="certificate-section-wrapper">
+            <!-- Instruksi & Form Nama Penerima -->
+            <div class="cert-instruction-card">
+              <h3 style="font-size:1.3rem; color:var(--text-dark); margin-bottom:0.5rem;">
+                Penerbitan Piagam Prestasi Praktikan Kimia
+              </h3>
+              <p style="font-size:0.92rem; color:var(--text-secondary);">
+                Sertifikat ini ditandatangani secara resmi oleh Guru Pengampu Kimia: <strong>Fatma Alawiyah, S.Pd.,Gr</strong> (NIP: <strong>200103272025212017</strong>). Pastikan ejaan nama lengkap Anda sudah benar sebelum mencetak.
+              </p>
+
+              <div class="cert-input-row">
+                <input type="text" id="cert-input-name" class="form-control-pbl" placeholder="Ketik Nama Lengkap Siswa untuk Sertifikat..." style="font-size:1.05rem; font-weight:700; text-align:center;">
+                <button class="btn btn-primary" id="btn-update-cert">Perbarui Piagam</button>
+              </div>
+            </div>
+
+            <!-- Tampilan Preview Canvas Sertifikat Resolusi Tinggi -->
+            <div class="certificate-preview-container" id="certificate-print-container">
+              <canvas id="certificate-canvas"></canvas>
+            </div>
+
+            <!-- Tombol Aksi Cetak & Unduh -->
+            <div class="cert-actions-bar">
+              <button class="btn btn-secondary btn-lg" id="btn-download-cert">
+                📥 Unduh Gambar Piagam (.PNG HD)
+              </button>
+              <button class="btn btn-primary btn-lg" id="btn-print-cert">
+                🖨️ Cetak Piagam (Format Kertas A4 Landscape)
+              </button>
+            </div>
+          </div>
+
+          <div class="page-nav-footer">
+            <button class="btn btn-secondary btn-page-prev">← Modul 9: Refleksi Siswa</button>
+            <button class="btn btn-secondary" onclick="window.App.navigateToModule(1)">
+              🏠 Kembali ke Beranda Utama
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ==========================================================================
+         FOOTER SITUS WEB
+         ========================================================================== -->
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <h3>ChemVirtual Lab</h3>
+          <p>
+            Laboratorium Virtual Kimia Interaktif & Multimedia Pembelajaran Berbasis Web modern, dirancang untuk mendukung pembelajaran sains yang aman, bermakna, dan menyenangkan bagi peserta didik SMA/MA sederajat.
+          </p>
+          <div class="footer-teacher-block">
+            <strong>Fatma Alawiyah, S.Pd.,Gr</strong>
+            <span>NIP. 200103272025212017</span>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Daftar Modul Belajar</h4>
+          <ul class="footer-links">
+            <li><a href="javascript:void(0)" onclick="window.App.navigateToModule(1)">1. Beranda Portal</a></li>
+            <li><a href="javascript:void(0)" onclick="window.App.navigateToModule(2)">2. Kartun APD Lengkap</a></li>
+            <li><a href="javascript:void(0)" onclick="window.App.navigateToModule(3)">3. Aturan Laboratorium</a></li>
+            <li><a href="javascript:void(0)" onclick="window.App.navigateToModule(4)">4. Alat 3D & Simbol GHS</a></li>
+            <li><a href="javascript:void(0)" onclick="window.App.navigateToModule(5)">5. Teori Kimia & Atom</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Fitur Praktikum & Uji</h4>
+          <ul class="footer-links">
+            <li><a href="javascript:void(0)" onclick="window.App.navigateToModule(6)">6. Praktikum Sederhana</a></li>
+            <li><a href="javascript:void(0)" onclick="window.App.navigateToModule(7)">7. Video & LKPD PBL</a></li>
+            <li><a href="javascript:void(0)" onclick="window.App.navigateToModule(8)">8. Kuis Evaluasi</a></li>
+            <li><a href="javascript:void(0)" onclick="window.App.navigateToModule(9)">9. Refleksi Siswa</a></li>
+            <li><a href="javascript:void(0)" onclick="window.App.navigateToModule(10)">10. Cetak Sertifikat</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 ChemVirtual Lab &bull; Pengembangan Pembelajaran Berbasis Multimedia (S2 MTP FATMA)</div>
+        <div>Guru Pengampu: Fatma Alawiyah, S.Pd.,Gr (200103272025212017)</div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Script Modul-Modul Aplikasi -->
+  <script src="js/data/equipment-data.js"></script>
+  <script src="js/data/symbols-data.js"></script>
+  <script src="js/data/elements-data.js"></script>
+  <script src="js/data/quiz-data.js"></script>
+
+  <script src="js/modules/apd-character.js"></script>
+  <script src="js/modules/three-equipment.js"></script>
+  <script src="js/modules/chemical-theory.js"></script>
+  <script src="js/modules/virtual-labs.js"></script>
+  <script src="js/modules/lkpd-pbl.js"></script>
+  <script src="js/modules/quiz-engine.js"></script>
+  <script src="js/modules/reflection.js"></script>
+  <script src="js/modules/certificate.js"></script>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

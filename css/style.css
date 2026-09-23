@@ -1,0 +1,4441 @@
+/* ==========================================================================
+   CHEMVIRTUAL LAB - SISTEM DESAIN & STYLING UTAMA
+   Tema: Premium Light Blue (Biru Muda Premium) & High-Contrast Crisp Typography
+   Guru Kimia: Fatma Alawiyah, S.Pd.,Gr (NIP: 200103272025212017)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+:root {
+  /* Palet Warna Biru Muda Premium */
+  --bg-primary: #f0f7ff;
+  --bg-secondary: #e0f2fe;
+  --bg-tertiary: #dbeafe;
+  --bg-surface: #ffffff;
+  --bg-glass: rgba(255, 255, 255, 0.88);
+  --bg-glass-card: rgba(255, 255, 255, 0.94);
+  --bg-glass-accent: rgba(224, 242, 254, 0.7);
+
+  /* Aksen Biru & Sains */
+  --accent-cyan: #0284c7;
+  --accent-blue: #0369a1;
+  --accent-navy: #075985;
+  --accent-indigo: #4338ca;
+  --accent-teal: #0d9488;
+  --accent-emerald: #059669;
+  --accent-amber: #d97706;
+  --accent-rose: #e11d48;
+  --accent-gold: #b45309;
+
+  /* Tipografi Berkontras Tinggi & Sangat Jelas (WCAG AAA) */
+  --text-dark: #0f172a;        /* Navy pekat untuk judul utama */
+  --text-primary: #1e293b;     /* Slate pekat untuk teks paragraf */
+  --text-secondary: #334155;   /* Slate sedang untuk sub-teks */
+  --text-muted: #64748b;       /* Abu-abu tua untuk keterangan */
+  --text-light: #ffffff;       /* Teks putih untuk badge/tombol */
+
+  /* Garis Batas & Bayangan */
+  --border-subtle: #cbd5e1;
+  --border-accent: #93c5fd;
+  --border-glass: rgba(255, 255, 255, 0.85);
+  
+  --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
+  --shadow-md: 0 4px 20px -2px rgba(2, 132, 199, 0.12), 0 2px 6px -1px rgba(15, 23, 42, 0.06);
+  --shadow-lg: 0 10px 30px -4px rgba(2, 132, 199, 0.18), 0 4px 12px -2px rgba(15, 23, 42, 0.08);
+  --shadow-glow: 0 0 25px rgba(56, 189, 248, 0.45);
+
+  /* Radius & Transisi */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-full: 9999px;
+
+  --transition-fast: 0.18s ease;
+  --transition-normal: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-bounce: 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Font Families */
+  --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* Global Reset & Base */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  background-image: 
+    radial-gradient(circle at 10% 15%, rgba(186, 230, 253, 0.45) 0%, transparent 40%),
+    radial-gradient(circle at 90% 25%, rgba(199, 210, 254, 0.4) 0%, transparent 45%),
+    radial-gradient(circle at 50% 80%, rgba(224, 242, 254, 0.5) 0%, transparent 50%),
+    linear-gradient(135deg, #f0f7ff 0%, #e0f2fe 50%, #dbeafe 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Molekul Latar Belakang Animasi */
+.bg-molecules {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  opacity: 0.65;
+}
+
+.molecule-bubble {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.25) 0%, rgba(14, 165, 233, 0.05) 70%, transparent 100%);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  animation: floatBubble 18s infinite ease-in-out alternate;
+}
+
+@keyframes floatBubble {
+  0% { transform: translateY(0px) rotate(0deg) scale(1); }
+  50% { transform: translateY(-40px) rotate(180deg) scale(1.08); }
+  100% { transform: translateY(20px) rotate(360deg) scale(0.95); }
+}
+
+/* Typography Overrides */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--text-dark);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+p {
+  color: var(--text-primary);
+  font-weight: 450;
+}
+
+a {
+  color: var(--accent-cyan);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+a:hover {
+  color: var(--accent-blue);
+}
+
+/* ==========================================================================
+   LAYOUT UTAMA (Header, Navigation, Sidebar & Content)
+   ========================================================================== */
+
+#app-container {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Header Navbar */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg-glass);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(147, 197, 253, 0.5);
+  box-shadow: 0 4px 15px rgba(2, 132, 199, 0.08);
+  padding: 0.65rem 1.5rem;
+}
+
+.header-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.brand-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  cursor: pointer;
+}
+
+.brand-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 1.4rem;
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+  transition: transform var(--transition-bounce);
+}
+.brand-wrapper:hover .brand-icon-box {
+  transform: rotate(-8deg) scale(1.08);
+}
+
+.brand-title-group h1 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-dark);
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.brand-title-group .brand-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  background: #e0f2fe;
+  color: #0369a1;
+  padding: 0.15rem 0.45rem;
+  border-radius: var(--radius-full);
+  border: 1px solid #bae6fd;
+  text-transform: uppercase;
+}
+
+.brand-subtitle {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--accent-blue);
+  margin-top: -2px;
+}
+
+/* Teacher Pill in Header */
+.teacher-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid #bfdbfe;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.teacher-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #38bdf8, #0284c7);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+.teacher-info-mini {
+  display: flex;
+  flex-direction: column;
+}
+
+.teacher-name {
+  font-weight: 700;
+  color: var(--text-dark);
+  line-height: 1.1;
+}
+
+.teacher-role {
+  font-size: 0.7rem;
+  color: var(--accent-cyan);
+  font-weight: 600;
+}
+
+/* Nav Progress Bar */
+.progress-container {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-width: 140px;
+}
+
+.progress-track {
+  flex: 1;
+  height: 8px;
+  background: #cbd5e1;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 10%;
+  background: linear-gradient(90deg, #0284c7, #38bdf8);
+  border-radius: var(--radius-full);
+  transition: width var(--transition-normal);
+}
+
+.progress-text {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  font-family: var(--font-mono);
+}
+
+/* Header Controls */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-header {
+  background: var(--bg-surface);
+  border: 1px solid #bfdbfe;
+  color: var(--text-dark);
+  padding: 0.45rem 0.85rem;
+  border-radius: var(--radius-md);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all var(--transition-fast);
+}
+
+.btn-header:hover {
+  background: #e0f2fe;
+  border-color: #38bdf8;
+  color: #0369a1;
+  transform: translateY(-1px);
+}
+
+.btn-menu-toggle {
+  display: none;
+  font-size: 1.2rem;
+  padding: 0.45rem;
+}
+
+/* Sub-Nav / Module Horizontal Scroller */
+.modules-nav-bar {
+  background: rgba(240, 249, 255, 0.95);
+  border-bottom: 1px solid rgba(147, 197, 253, 0.4);
+  padding: 0.5rem 1.5rem;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: thin;
+  position: sticky;
+  top: 61px;
+  z-index: 90;
+  backdrop-filter: blur(10px);
+}
+
+.modules-nav-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.nav-module-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-full);
+  background: var(--bg-surface);
+  border: 1px solid #bfdbfe;
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.nav-module-item:hover {
+  background: #e0f2fe;
+  color: var(--accent-blue);
+  border-color: #38bdf8;
+  transform: translateY(-1px);
+}
+
+.nav-module-item.active {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  color: #ffffff;
+  border-color: #0284c7;
+  box-shadow: 0 2px 10px rgba(2, 132, 199, 0.3);
+}
+
+.nav-module-item .mod-num {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.nav-module-item.active .mod-num {
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+}
+
+/* ==========================================================================
+   MAIN CONTENT WRAPPER & PAGE VIEWS
+   ========================================================================== */
+
+.main-content {
+  flex: 1;
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.page-view {
+  display: none;
+  animation: fadeInView 0.35s ease forwards;
+}
+
+.page-view.active-view {
+  display: block;
+}
+
+@keyframes fadeInView {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Cards & Containers Glassmorphism */
+.glass-panel {
+  background: var(--bg-glass-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: 1.8rem;
+  margin-bottom: 1.8rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #38bdf8, #0284c7, #6366f1);
+}
+
+.panel-header {
+  margin-bottom: 1.4rem;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 1rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.panel-title-group h2 {
+  font-size: 1.65rem;
+  color: var(--text-dark);
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.panel-title-group p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin-top: 0.25rem;
+  max-width: 800px;
+}
+
+.badge-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #e0f2fe;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+}
+
+/* Tombol Aksi Universal */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.4rem;
+  font-size: 0.92rem;
+  font-weight: 700;
+  font-family: var(--font-heading);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: none;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+}
+.btn-primary:hover {
+  background: linear-gradient(135deg, #0369a1 0%, #075985 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(2, 132, 199, 0.45);
+  color: #ffffff;
+}
+
+.btn-secondary {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: var(--text-dark);
+  box-shadow: var(--shadow-sm);
+}
+.btn-secondary:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+  color: var(--accent-blue);
+  transform: translateY(-1px);
+}
+
+.btn-accent {
+  background: linear-gradient(135deg, #0d9488 0%, #059669 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(13, 148, 136, 0.3);
+}
+.btn-accent:hover {
+  background: linear-gradient(135deg, #0f766e 0%, #047857 100%);
+  transform: translateY(-2px);
+  color: #ffffff;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1.5px solid var(--accent-cyan);
+  color: var(--accent-blue);
+}
+.btn-outline:hover {
+  background: #e0f2fe;
+  color: var(--accent-navy);
+}
+
+.btn-lg {
+  padding: 0.85rem 1.8rem;
+  font-size: 1.05rem;
+  border-radius: var(--radius-lg);
+}
+
+.btn-sm {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.82rem;
+  border-radius: var(--radius-sm);
+}
+
+/* Page Navigation Footer */
+.page-nav-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #cbd5e1;
+  gap: 1rem;
+}
+
+/* ==========================================================================
+   HALAMAN 1: BERANDA (HERO & DASHBOARD)
+   ========================================================================== */
+
+.hero-section {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 2.5rem;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.hero-content h2 {
+  font-size: 2.4rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  color: var(--text-dark);
+}
+
+.hero-content h2 span {
+  background: linear-gradient(135deg, #0284c7, #2563eb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-desc {
+  font-size: 1.05rem;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+  line-height: 1.7;
+}
+
+.teacher-hero-card {
+  background: linear-gradient(135deg, rgba(224, 242, 254, 0.95) 0%, rgba(255, 255, 255, 0.98) 100%);
+  border: 1px solid #bae6fd;
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-bottom: 1.8rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.teacher-photo-badge {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0284c7, #0369a1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 1.8rem;
+  box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3);
+  flex-shrink: 0;
+}
+
+.teacher-details h4 {
+  font-size: 1.15rem;
+  color: var(--text-dark);
+  font-weight: 800;
+}
+
+.teacher-nip {
+  font-size: 0.84rem;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+
+.teacher-meta {
+  font-size: 0.8rem;
+  color: var(--accent-cyan);
+  font-weight: 700;
+}
+
+.hero-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.8rem;
+}
+
+.stat-item {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-md);
+  padding: 0.85rem;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.stat-num {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--accent-blue);
+  font-family: var(--font-heading);
+}
+
+.stat-label {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+/* Hero Visual Box */
+.hero-visual-box {
+  position: relative;
+  background: linear-gradient(135deg, #bfdbfe 0%, #e0f2fe 100%);
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  box-shadow: var(--shadow-lg);
+  border: 2px solid #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 380px;
+  overflow: hidden;
+}
+
+.hero-flask-anim {
+  width: 140px;
+  height: 170px;
+  position: relative;
+  animation: flaskFloat 4s ease-in-out infinite alternate;
+}
+
+@keyframes flaskFloat {
+  0% { transform: translateY(0px) rotate(0deg); }
+  100% { transform: translateY(-12px) rotate(3deg); }
+}
+
+.hero-card-floating {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: var(--radius-md);
+  padding: 0.6rem 1rem;
+  box-shadow: var(--shadow-md);
+  border: 1px solid #bae6fd;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.card-float-1 { top: 20px; left: 15px; }
+.card-float-2 { bottom: 25px; right: 15px; }
+
+/* Grid Alur Modul Belajar (10 Modul) */
+.modules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.module-card {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: var(--radius-md);
+  padding: 1.3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.module-card:hover {
+  transform: translateY(-4px);
+  border-color: #38bdf8;
+  box-shadow: var(--shadow-md);
+}
+
+.module-card.completed {
+  border-color: #10b981;
+  background: #f0fdf4;
+}
+
+.mod-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.mod-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: #e0f2fe;
+  color: #0369a1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+}
+
+.mod-card-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  background: #f1f5f9;
+  color: var(--text-secondary);
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-full);
+}
+
+.mod-card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 0.4rem;
+}
+
+.mod-card-desc {
+  font-size: 0.84rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.mod-card-action {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--accent-blue);
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: auto;
+}
+
+/* ==========================================================================
+   HALAMAN 2: KARTUN APD LENGKAP INTERAKTIF
+   ========================================================================== */
+
+.apd-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.apd-character-stage {
+  background: linear-gradient(180deg, #ffffff 0%, #e0f2fe 100%);
+  border: 1px solid #bfdbfe;
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  box-shadow: var(--shadow-md);
+  min-height: 560px;
+}
+
+.apd-character-stage h3 {
+  font-size: 1.15rem;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+}
+
+.apd-character-stage .stage-hint {
+  font-size: 0.85rem;
+  color: var(--accent-blue);
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  background: #e0f2fe;
+  padding: 0.25rem 0.85rem;
+  border-radius: var(--radius-full);
+}
+
+.cartoon-wrapper {
+  position: relative;
+  width: 320px;
+  height: 480px;
+  display: flex;
+  justify-content: center;
+}
+
+.cartoon-wrapper svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 8px 16px rgba(15, 23, 42, 0.12));
+}
+
+/* Hotspot Markers */
+.apd-hotspot {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #0284c7;
+  color: #ffffff;
+  border: 2px solid #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 0 0 0 rgba(2, 132, 199, 0.7);
+  animation: pulseHotspot 2s infinite;
+  transition: transform var(--transition-bounce);
+  z-index: 10;
+}
+
+.apd-hotspot:hover, .apd-hotspot.active {
+  transform: scale(1.25);
+  background: #0369a1;
+  animation: none;
+  box-shadow: 0 0 15px rgba(2, 132, 199, 0.8);
+}
+
+@keyframes pulseHotspot {
+  0% { box-shadow: 0 0 0 0 rgba(2, 132, 199, 0.7); }
+  70% { box-shadow: 0 0 0 12px rgba(2, 132, 199, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(2, 132, 199, 0); }
+}
+
+/* Hotspot coordinates on SVG */
+.hotspot-head { top: 20px; left: 144px; }        /* Hairnet */
+.hotspot-eyes { top: 88px; left: 144px; }        /* Goggles */
+.hotspot-mask { top: 125px; left: 144px; }       /* Respirator */
+.hotspot-coat { top: 215px; left: 144px; }       /* Jas Lab */
+.hotspot-gloves-l { top: 285px; left: 55px; }    /* Sarung Tangan Kiri */
+.hotspot-gloves-r { top: 285px; left: 235px; }   /* Sarung Tangan Kanan */
+.hotspot-pants { top: 375px; left: 144px; }      /* Celana Panjang */
+.hotspot-shoes { top: 450px; left: 144px; }      /* Safety Shoes */
+
+/* APD Info Panel */
+.apd-info-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.apd-detail-card {
+  background: #ffffff;
+  border: 1px solid #bfdbfe;
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+}
+
+.apd-detail-header {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.apd-detail-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: #e0f2fe;
+  color: #0284c7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+}
+
+.apd-detail-header h3 {
+  font-size: 1.3rem;
+  color: var(--text-dark);
+}
+
+.apd-specs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
+  margin: 1rem 0;
+}
+
+.apd-spec-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-sm);
+  padding: 0.75rem;
+}
+
+.apd-spec-box strong {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 0.2rem;
+}
+
+.apd-spec-box span {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.apd-warning-box {
+  background: #fff1f2;
+  border-left: 4px solid #f43f5e;
+  padding: 0.75rem 1rem;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin-top: 1rem;
+}
+
+.apd-warning-box strong {
+  color: #be123c;
+  font-size: 0.85rem;
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.apd-warning-box p {
+  color: #881337;
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+/* APD Checklist Mini-Game */
+.apd-checklist-box {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: var(--radius-lg);
+  padding: 1.4rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.apd-checklist-box h4 {
+  font-size: 1.05rem;
+  margin-bottom: 0.85rem;
+  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.checklist-items-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+
+.checklist-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.checklist-item:hover {
+  background: #e0f2fe;
+  border-color: #93c5fd;
+}
+
+.checklist-item input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #0284c7;
+  cursor: pointer;
+}
+
+.checklist-item.checked {
+  background: #f0fdf4;
+  border-color: #86efac;
+  color: #166534;
+}
+
+/* ==========================================================================
+   HALAMAN 3: ATURAN DALAM LABORATORIUM (SOP & TANGGAP DARURAT)
+   ========================================================================== */
+
+.rules-tabs {
+  display: flex;
+  gap: 0.5rem;
+  border-bottom: 2px solid #cbd5e1;
+  margin-bottom: 1.5rem;
+  overflow-x: auto;
+}
+
+.rules-tab-btn {
+  padding: 0.65rem 1.4rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: var(--font-heading);
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.rules-tab-btn:hover {
+  color: var(--accent-blue);
+}
+
+.rules-tab-btn.active {
+  color: var(--accent-blue);
+  border-bottom-color: var(--accent-cyan);
+}
+
+.rules-content-tab {
+  display: none;
+}
+.rules-content-tab.active {
+  display: block;
+}
+
+.rules-dos-donts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.rules-column-dos {
+  background: #f0fdf4;
+  border: 1px solid #86efac;
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+}
+
+.rules-column-donts {
+  background: #fff1f2;
+  border: 1px solid #fecdd3;
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+}
+
+.rules-col-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 800;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 2px solid;
+}
+
+.rules-column-dos .rules-col-title {
+  color: #15803d;
+  border-bottom-color: #bbf7d0;
+}
+
+.rules-column-donts .rules-col-title {
+  color: #b91c1c;
+  border-bottom-color: #fecdd3;
+}
+
+.rule-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.rule-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.rules-column-dos .rule-list li {
+  color: #166534;
+}
+
+.rules-column-donts .rule-list li {
+  color: #991b1b;
+}
+
+.rule-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* Emergency Procedure Interactive Cards */
+.emergency-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.emergency-card {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: var(--radius-md);
+  padding: 1.4rem;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-fast);
+}
+
+.emergency-card:hover {
+  border-color: #38bdf8;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.emergency-icon-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.85rem;
+}
+
+.emergency-icon-banner span {
+  font-size: 1.8rem;
+}
+
+.emergency-card h4 {
+  font-size: 1.1rem;
+  color: var(--text-dark);
+}
+
+.emergency-steps {
+  margin-top: 0.85rem;
+  padding-left: 1.2rem;
+  font-size: 0.86rem;
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+.emergency-steps li {
+  margin-bottom: 0.4rem;
+}
+
+/* ==========================================================================
+   HALAMAN 4: ALAT PRAKTIKUM 3D/AR & SIMBOL GHS
+   ========================================================================== */
+
+.equipment-layout {
+  display: grid;
+  grid-template-columns: 1.3fr 0.9fr;
+  gap: 1.8rem;
+  align-items: start;
+}
+
+/* 3D Three.js Viewer Canvas Stage */
+.three-viewer-wrapper {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  border: 2px solid #ffffff;
+  position: relative;
+  min-height: 480px;
+  display: flex;
+  flex-direction: column;
+}
+
+.three-toolbar {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 20;
+}
+
+.three-badge {
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #38bdf8;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.three-controls-group {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.btn-three-ctrl {
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: all var(--transition-fast);
+}
+
+.btn-three-ctrl:hover {
+  background: #0284c7;
+  color: #fff;
+  transform: scale(1.12);
+  border-color: #38bdf8;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.6);
+}
+
+.btn-three-ctrl.active {
+  background: #0284c7;
+  color: #ffffff;
+  border-color: #38bdf8;
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.85);
+  transform: scale(1.06);
+}
+
+#three-canvas-container {
+  width: 100%;
+  height: 460px;
+  cursor: grab;
+  position: relative;
+  overflow: hidden;
+}
+#three-canvas-container:active {
+  cursor: grabbing;
+}
+#three-canvas-container canvas {
+  position: relative;
+  z-index: 2;
+}
+
+.three-interactive-hints {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.hint-chip {
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(6px);
+  color: #e2e8f0;
+  font-size: 0.72rem;
+  font-weight: 500;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Equipment Details & List */
+.equipment-details-box {
+  background: #ffffff;
+  border: 1px solid #bfdbfe;
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.equip-selector-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(115px, 1fr));
+  gap: 0.55rem;
+  max-height: 250px;
+  overflow-y: auto;
+  padding-right: 0.35rem;
+}
+
+/* Custom Scrollbar untuk Grid Alat */
+.equip-selector-grid::-webkit-scrollbar {
+  width: 6px;
+}
+.equip-selector-grid::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+.equip-selector-grid::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.equip-item-btn {
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  padding: 0.55rem 0.4rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  text-align: center;
+  transition: all var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.equip-item-btn:hover {
+  background: #f0f9ff;
+  border-color: #38bdf8;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(2, 132, 199, 0.15);
+}
+
+.equip-item-btn.active {
+  background: linear-gradient(145deg, #0284c7 0%, #0369a1 100%);
+  border-color: #0284c7;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4);
+  transform: translateY(-2px);
+}
+
+.equip-btn-svg {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--transition-bounce);
+}
+.equip-btn-svg svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+.equip-item-btn:hover .equip-btn-svg {
+  transform: scale(1.12);
+}
+
+.equip-btn-name {
+  font-size: 0.74rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--text-dark);
+}
+.equip-item-btn.active .equip-btn-name {
+  color: #ffffff;
+}
+
+/* Kartu Info Detail Alat */
+.equip-info-card {
+  border-top: 1px solid #e2e8f0;
+  padding-top: 1.1rem;
+}
+
+.equip-info-header {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 0.85rem;
+}
+
+.equip-info-svg-badge {
+  width: 54px;
+  height: 54px;
+  background: #f0f9ff;
+  border: 1.5px solid #bae6fd;
+  border-radius: var(--radius-md);
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(2, 132, 199, 0.12);
+}
+.equip-info-svg-badge svg {
+  width: 100%;
+  height: 100%;
+}
+
+.equip-info-title-group h3 {
+  font-size: 1.25rem;
+  color: var(--text-dark);
+  margin-bottom: 0.2rem;
+  line-height: 1.2;
+}
+
+.equip-info-title-group .latin-name {
+  font-size: 0.84rem;
+  font-style: italic;
+  color: var(--accent-cyan);
+}
+
+.equip-info-desc {
+  font-size: 0.88rem;
+  color: var(--text-primary);
+  line-height: 1.55;
+  margin-bottom: 0.85rem;
+}
+
+.equip-ar-actions {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-top: 1.1rem;
+  padding-top: 0.9rem;
+  border-top: 1px dashed #cbd5e1;
+}
+
+.meniscus-box {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.82rem;
+  color: #1e40af;
+}
+
+/* ==========================================================================
+   LIVE CAMERA AR MODE & HUD
+   ========================================================================== */
+.ar-camera-video-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.ar-mode-active {
+  background: transparent !important;
+}
+
+.ar-hud-overlay {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 30;
+  pointer-events: none;
+}
+
+.ar-hud-pill {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(8px);
+  color: #ffffff;
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  border: 1px solid rgba(56, 189, 248, 0.4);
+}
+
+.ar-hud-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+  animation: pulseDot 1.5s infinite;
+}
+
+@keyframes pulseDot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.5; }
+}
+
+.ar-hud-btn-group {
+  display: flex;
+  gap: 0.4rem;
+  pointer-events: auto;
+}
+
+.ar-hud-action-btn {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(8px);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-md);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.ar-hud-action-btn:hover {
+  background: #0284c7;
+  border-color: #38bdf8;
+  color: #fff;
+}
+.ar-hud-close:hover {
+  background: #ef4444;
+  border-color: #f87171;
+}
+
+.camera-flash-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  z-index: 50;
+  pointer-events: none;
+  animation: cameraFlash 0.4s ease-out forwards;
+}
+@keyframes cameraFlash {
+  0% { opacity: 0.9; }
+  100% { opacity: 0; }
+}
+
+/* ==========================================================================
+   MODAL UNIVERSAL, AR CARD SIAP CETAK & AR SCANNER
+   ========================================================================== */
+.custom-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(6px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  animation: fadeInModal 0.25s ease-out;
+}
+
+@keyframes fadeInModal {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.custom-modal-dialog {
+  background: #ffffff;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  width: 100%;
+  max-width: 640px;
+  max-height: 90vh;
+  overflow-y: auto;
+  border: 1px solid #bfdbfe;
+  display: flex;
+  flex-direction: column;
+}
+
+.custom-modal-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f8fafc;
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+}
+.custom-modal-header h3 {
+  font-size: 1.2rem;
+  color: var(--text-dark);
+}
+
+.btn-modal-close {
+  background: transparent;
+  border: none;
+  font-size: 1.3rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0.3rem 0.6rem;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+.btn-modal-close:hover {
+  background: #fee2e2;
+  color: #ef4444;
+}
+
+.custom-modal-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.modal-subtitle-text {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Frame Kartu AR Siap Cetak (Printable AR Card) */
+.printable-ar-card-frame {
+  background: #ffffff;
+  border: 3px solid #0f172a;
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: relative;
+}
+
+.card-header-badge {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid #0f172a;
+  padding-bottom: 0.6rem;
+}
+.card-logo-mini {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #0284c7;
+  letter-spacing: 0.02em;
+}
+.card-category-tag {
+  background: #0f172a;
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.card-content-grid {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 1.25rem;
+  align-items: center;
+}
+
+.card-qr-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem;
+  border: 2px dashed #0284c7;
+  border-radius: var(--radius-sm);
+  background: #f8fafc;
+}
+.qrcode-render-target canvas, .qrcode-render-target svg {
+  display: block;
+  max-width: 130px;
+  height: auto;
+}
+.qr-target-code {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: #64748b;
+  font-weight: 700;
+}
+
+.card-info-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.card-equip-svg {
+  width: 48px;
+  height: 48px;
+}
+.card-equip-title {
+  font-size: 1.3rem;
+  color: #0f172a;
+  font-weight: 800;
+  line-height: 1.2;
+}
+.card-latin-title {
+  font-size: 0.82rem;
+  font-style: italic;
+  color: #0284c7;
+  margin-bottom: 0.3rem;
+}
+.card-mini-desc {
+  font-size: 0.8rem;
+  color: #334155;
+  line-height: 1.45;
+}
+.card-specs-mini {
+  font-size: 0.75rem;
+  color: #475569;
+  background: #f1f5f9;
+  padding: 0.35rem 0.55rem;
+  border-radius: 4px;
+}
+
+.card-footer-notice {
+  border-top: 1.5px solid #cbd5e1;
+  padding-top: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  color: #64748b;
+}
+.marker-code-badge {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: #0284c7;
+}
+
+.modal-action-bar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+/* Print Stylesheet Khusus Kartu AR */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #modal-ar-card, #modal-ar-card * {
+    visibility: visible;
+  }
+  #modal-ar-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: transparent;
+    padding: 0;
+  }
+  .custom-modal-header, .modal-subtitle-text, .modal-action-bar {
+    display: none !important;
+  }
+  .printable-ar-card-frame {
+    border: 3px solid #000000 !important;
+    box-shadow: none !important;
+  }
+}
+
+/* ==========================================================================
+   AR / QR CODE CAMERA SCANNER STYLES
+   ========================================================================== */
+.ar-scanner-dialog {
+  max-width: 580px;
+}
+
+.scanner-viewport-box {
+  position: relative;
+  width: 100%;
+  height: 340px;
+  background: #090d16;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#scanner-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Laser Scan Beam Animasi */
+.scanner-laser-beam {
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #38bdf8, #67e8f9, transparent);
+  box-shadow: 0 0 15px #38bdf8, 0 0 30px #0284c7;
+  z-index: 10;
+  animation: scanLaser 2.2s ease-in-out infinite alternate;
+}
+
+@keyframes scanLaser {
+  0% { top: 15%; }
+  100% { top: 85%; }
+}
+
+/* Reticle Target Frame */
+.scanner-reticle-frame {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border: 1.5px dashed rgba(56, 189, 248, 0.5);
+  border-radius: 12px;
+  z-index: 8;
+}
+
+.reticle-corner {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-color: #38bdf8;
+  border-style: solid;
+  border-width: 0;
+}
+.reticle-tl { top: -2px; left: -2px; border-top-width: 4px; border-left-width: 4px; border-radius: 4px 0 0 0; }
+.reticle-tr { top: -2px; right: -2px; border-top-width: 4px; border-right-width: 4px; border-radius: 0 4px 0 0; }
+.reticle-bl { bottom: -2px; left: -2px; border-bottom-width: 4px; border-left-width: 4px; border-radius: 0 0 0 4px; }
+.reticle-br { bottom: -2px; right: -2px; border-bottom-width: 4px; border-right-width: 4px; border-radius: 0 0 4px 0; }
+
+.scanner-status-pill {
+  position: absolute;
+  bottom: 15px;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(6px);
+  color: #ffffff;
+  padding: 0.45rem 1rem;
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  font-weight: 600;
+  z-index: 12;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: center;
+  max-width: 85%;
+}
+
+/* Tray Simulasi Scan 1-Klik */
+.quick-scan-test-tray {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-md);
+  padding: 0.85rem;
+}
+.quick-scan-title {
+  font-size: 0.82rem;
+  color: var(--text-dark);
+  margin-bottom: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.quick-scan-items-row {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.3rem;
+}
+.btn-quick-scan-test {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  cursor: pointer;
+  min-width: 80px;
+  flex-shrink: 0;
+  transition: all var(--transition-fast);
+}
+.btn-quick-scan-test:hover {
+  background: #e0f2fe;
+  border-color: #38bdf8;
+  transform: translateY(-1px);
+}
+.btn-quick-scan-test span {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-quick-scan-test span svg {
+  width: 100%;
+  height: 100%;
+}
+.btn-quick-scan-test small {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  white-space: nowrap;
+}
+
+
+/* SIMBOL BAHAYA KESELAMATAN GHS */
+.ghs-symbols-section {
+  margin-top: 2.5rem;
+}
+
+.ghs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+}
+
+.ghs-card {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  transition: all var(--transition-normal);
+  cursor: pointer;
+}
+
+.ghs-card:hover {
+  transform: translateY(-4px);
+  border-color: #f87171;
+  box-shadow: var(--shadow-md);
+}
+
+.ghs-diamond-frame {
+  width: 90px;
+  height: 90px;
+  border: 4px solid #ef4444;
+  border-radius: 8px;
+  transform: rotate(45deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1.5rem 0;
+  background: #ffffff;
+  box-shadow: 0 4px 10px rgba(239, 68, 68, 0.15);
+}
+
+.ghs-diamond-content {
+  transform: rotate(-45deg);
+  font-size: 2.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ghs-name {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text-dark);
+  margin-bottom: 0.35rem;
+}
+
+.ghs-eng-name {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-bottom: 0.6rem;
+}
+
+.ghs-desc {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  margin-bottom: 0.85rem;
+}
+
+.ghs-examples-chip {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-full);
+  padding: 0.25rem 0.65rem;
+  font-size: 0.75rem;
+  color: var(--text-dark);
+  font-weight: 600;
+  margin-top: auto;
+}
+
+/* ==========================================================================
+   HALAMAN 5: MATERI PRAKTIKUM (HUKUM KIMIA, STRUKTUR ATOM & SPU)
+   ========================================================================== */
+
+.materi-sub-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.materi-sub-view {
+  display: none;
+}
+.materi-sub-view.active {
+  display: block;
+}
+
+/* Simulator Model Atom Bohr */
+.bohr-simulator-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 1.8rem;
+  align-items: center;
+}
+
+.bohr-canvas-stage {
+  background: radial-gradient(circle, #0f172a 0%, #020617 100%);
+  border-radius: var(--radius-xl);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  min-height: 420px;
+  box-shadow: var(--shadow-lg);
+  border: 2px solid #334155;
+}
+
+#bohr-canvas {
+  width: 100%;
+  max-width: 380px;
+  height: 380px;
+}
+
+.bohr-controls-card {
+  background: #ffffff;
+  border: 1px solid #bfdbfe;
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.bohr-element-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.btn-bohr-elem {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--text-dark);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-bohr-elem:hover {
+  background: #e0f2fe;
+  border-color: #38bdf8;
+  color: #0284c7;
+}
+
+.btn-bohr-elem.active {
+  background: #0284c7;
+  color: #fff;
+  border-color: #0284c7;
+}
+
+.bohr-data-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.bohr-data-pill {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-sm);
+  padding: 0.6rem;
+}
+
+.bohr-data-pill strong {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.bohr-data-pill span {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--text-dark);
+}
+
+/* ==========================================================================
+   ALAT PERAGA ATOM & MOLEKUL MOLYMOD 3D (MODUL 5)
+   ========================================================================== */
+
+.molymod-intro-card {
+  background: linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 100%);
+  border: 1px solid #bae6fd;
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.molymod-intro-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: #ffffff;
+  color: var(--primary-color);
+  font-size: 0.76rem;
+  font-weight: 800;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  border: 1px solid #bfdbfe;
+  margin-bottom: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.molymod-intro-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--text-dark);
+  margin-bottom: 0.35rem;
+}
+
+.molymod-intro-desc {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  max-width: 850px;
+  margin: 0;
+}
+
+/* Workspace Layout 2-Kolom */
+.molymod-workspace-layout {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+/* Kolom Kiri: Panggung 3D */
+.molymod-stage-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.molymod-stage-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-md);
+  padding: 0.65rem 1rem;
+}
+
+.molymod-title-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.molymod-title-icon {
+  font-size: 1.2rem;
+}
+
+.molymod-current-label {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-dark);
+}
+
+.molymod-mode-pill {
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 0.25rem 0.7rem;
+  border-radius: var(--radius-full);
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+}
+
+/* 3D Canvas Mount Stage */
+.molymod-canvas-container {
+  position: relative;
+  width: 100%;
+  height: 440px;
+  background: radial-gradient(ellipse at center, #1e293b 0%, #0f172a 65%, #020617 100%);
+  border-radius: var(--radius-lg);
+  border: 1px solid #334155;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.25);
+  overflow: hidden;
+  cursor: grab;
+  user-select: none;
+}
+
+.molymod-canvas-container:active {
+  cursor: grabbing;
+}
+
+.molymod-canvas-container canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.molymod-3d-hint {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #cbd5e1;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Floating Toolbar 3D */
+.molymod-floating-toolbar {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  z-index: 10;
+  max-width: 95%;
+  justify-content: center;
+}
+
+.btn-3d-tool {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #f1f5f9;
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-3d-tool:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.btn-3d-tool.active {
+  background: var(--primary-color, #0284c7);
+  border-color: #38bdf8;
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+}
+
+/* CPK Color Legend Bar */
+.molymod-cpk-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem 0.85rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-md);
+  padding: 0.65rem 1rem;
+}
+
+.cpk-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.cpk-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+.cpk-h { background: #ffffff; border: 1px solid #94a3b8; }
+.cpk-c { background: #1e293b; border: 1px solid #475569; }
+.cpk-o { background: #ef4444; }
+.cpk-n { background: #2563eb; }
+.cpk-cl { background: #10b981; }
+.cpk-s { background: #eab308; }
+.cpk-p { background: #8b5cf6; }
+.cpk-metal { background: #94a3b8; }
+
+/* Kolom Kanan: Sidebar Molekul & Info */
+.molymod-sidebar-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+/* Filter Kategori */
+.molymod-filter-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.moly-filter-btn {
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 0.32rem 0.75rem;
+  border-radius: var(--radius-full);
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.moly-filter-btn:hover {
+  background: #f1f5f9;
+  color: var(--text-dark);
+}
+
+.moly-filter-btn.active {
+  background: var(--primary-color, #0284c7);
+  border-color: var(--primary-color, #0284c7);
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(2, 132, 199, 0.25);
+}
+
+/* Grid Kartu Molekul Preset */
+.molymod-preset-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 0.6rem;
+  max-height: 220px;
+  overflow-y: auto;
+  padding-right: 0.35rem;
+}
+
+.molymod-preset-grid::-webkit-scrollbar {
+  width: 5px;
+}
+
+.molymod-preset-grid::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.moly-card {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: var(--radius-md);
+  padding: 0.65rem 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.moly-card:hover {
+  border-color: var(--primary-light, #38bdf8);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.moly-card.active {
+  border-color: var(--primary-color, #0284c7);
+  background: #f0f9ff;
+  box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.25);
+}
+
+.moly-card.hidden {
+  display: none !important;
+}
+
+.moly-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+
+.moly-card-formula {
+  font-family: var(--font-mono);
+  font-weight: 800;
+  font-size: 0.92rem;
+  color: var(--primary-color, #0284c7);
+}
+
+.moly-card-cat {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.15rem 0.4rem;
+  border-radius: var(--radius-full);
+  background: #f1f5f9;
+  color: var(--text-muted);
+}
+
+.moly-card-name {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 0.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.moly-card-vsepr {
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Card Detail Informasi Edukatif Molekul Terpilih */
+.molymod-info-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-lg);
+  padding: 1.15rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.moly-info-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.85rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.moly-info-header h4 {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-dark);
+  margin: 0;
+}
+
+.moly-badge-tag {
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 0.22rem 0.6rem;
+  border-radius: var(--radius-full);
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+}
+
+.moly-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+  margin-bottom: 0.85rem;
+}
+
+.moly-info-pill {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-sm);
+  padding: 0.55rem 0.7rem;
+}
+
+.moly-info-pill strong {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-bottom: 0.15rem;
+}
+
+.moly-info-pill span {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.moly-anatomy-box {
+  background: #fdf4ff;
+  border: 1px solid #f0abfc;
+  border-radius: var(--radius-md);
+  padding: 0.75rem 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+.moly-desc-box {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: var(--radius-md);
+  padding: 0.75rem 0.9rem;
+}
+
+/* Pintasan dari Atom Bohr ke Molymod */
+.bohr-molymod-shortcut {
+  margin-top: 1rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+/* Tabel Periodik Interaktif */
+.spu-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.25rem;
+}
+
+.spu-filter-btn {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--radius-full);
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.spu-filter-btn:hover, .spu-filter-btn.active {
+  background: #0284c7;
+  color: #fff;
+  border-color: #0284c7;
+}
+
+.spu-grid-wrapper {
+  overflow-x: auto;
+  padding: 0.5rem 0;
+}
+
+.periodic-table-grid {
+  display: grid;
+  grid-template-columns: repeat(18, minmax(46px, 1fr));
+  gap: 4px;
+  min-width: 900px;
+}
+
+.ptable-cell {
+  aspect-ratio: 1;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  padding: 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  position: relative;
+}
+
+.ptable-cell:hover {
+  transform: scale(1.18);
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+}
+
+.ptable-cell .pt-num {
+  font-size: 0.55rem;
+  font-weight: 700;
+  position: absolute;
+  top: 1px;
+  left: 2px;
+  color: var(--text-muted);
+}
+
+.ptable-cell .pt-symbol {
+  font-size: 0.88rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.ptable-cell .pt-name {
+  font-size: 0.5rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* Kategori SPU Colors */
+.cat-alkali { background: #fee2e2; border-color: #fca5a5; color: #991b1b; }
+.cat-alkaline { background: #ffedd5; border-color: #fdba74; color: #9a3412; }
+.cat-transition { background: #fef9c3; border-color: #fde047; color: #854d0e; }
+.cat-post-trans { background: #dcfce7; border-color: #86efac; color: #166534; }
+.cat-metalloid { background: #ccfbf1; border-color: #5eead4; color: #115e59; }
+.cat-nonmetal { background: #e0f2fe; border-color: #7dd3fc; color: #075985; }
+.cat-halogen { background: #e0e7ff; border-color: #a5b4fc; color: #3730a3; }
+.cat-noble { background: #f3e8ff; border-color: #d8b4fe; color: #6b21a8; }
+.cat-lanthanide { background: #fae8ff; border-color: #f0abfc; color: #86198f; }
+.cat-actinide { background: #ffe4e6; border-color: #fda4af; color: #9f1239; }
+
+/* Hukum Dasar Kimia Simulator */
+/* ==========================================================================
+   MODUL 5 SUB-TAB 3: HUKUM DASAR KIMIA & SUITE LABORATORIUM VIRTUAL
+   ========================================================================== */
+
+.laws-intro-card {
+  background: linear-gradient(135deg, #eff6ff 0%, #e0f2fe 100%);
+  border: 1px solid #bae6fd;
+  border-radius: var(--radius-lg);
+  padding: 1.5rem 1.8rem;
+  margin-bottom: 1.8rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.laws-intro-badge {
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  background: #0284c7;
+  color: #ffffff;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+
+.laws-intro-title {
+  font-size: 1.45rem;
+  color: var(--text-dark);
+  margin-bottom: 0.4rem;
+  font-weight: 800;
+}
+
+.laws-intro-desc {
+  font-size: 0.94rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* Grid Kartu Teori Hukum Dasar Kimia */
+.hukum-kimia-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.hukum-card {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+}
+
+.hukum-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: #93c5fd;
+}
+
+.hukum-card.has-vlab-badge {
+  border-top: 3px solid #0284c7;
+}
+
+.hukum-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+
+.hukum-card h4 {
+  font-size: 1.15rem;
+  color: var(--text-dark);
+  font-weight: 700;
+}
+
+.badge-vlab-available {
+  background: #e0f2fe;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  white-space: nowrap;
+}
+
+.hukum-formula-box {
+  background: #f8fafc;
+  border: 1.5px dashed #0284c7;
+  border-radius: var(--radius-sm);
+  padding: 0.75rem;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--accent-navy);
+  margin: 0.75rem 0;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.btn-open-vlab {
+  margin-top: auto;
+  width: 100%;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  box-shadow: 0 2px 6px rgba(2, 132, 199, 0.25);
+}
+
+/* ==========================================================================
+   SUITE LABORATORIUM VIRTUAL INTERAKTIF
+   ========================================================================== */
+
+.vlab-laws-container {
+  background: #ffffff;
+  border: 2px solid #bae6fd;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 1.8rem;
+  margin-top: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.vlab-laws-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, #0284c7, #38bdf8, #059669, #eab308, #ef4444);
+}
+
+.vlab-suite-header {
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.vlab-tag-pill {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: #e0f2fe;
+  color: #0369a1;
+  font-size: 0.78rem;
+  font-weight: 800;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.vlab-nav-pills {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.75rem;
+}
+
+.vlab-nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  background: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  text-align: left;
+  transition: all var(--transition-fast);
+}
+
+.vlab-nav-btn:hover {
+  background: #f0f9ff;
+  border-color: #7dd3fc;
+  transform: translateY(-2px);
+}
+
+.vlab-nav-btn.active {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  border-color: #0284c7;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+}
+
+.vlab-nav-btn.active .vlab-btn-text small {
+  color: #bae6fd;
+}
+
+.vlab-btn-icon {
+  font-size: 1.5rem;
+}
+
+.vlab-btn-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.vlab-btn-text strong {
+  font-size: 0.95rem;
+}
+
+.vlab-btn-text small {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+/* Konten Tab Praktikum */
+.vlab-content-pane {
+  display: none;
+}
+
+.vlab-content-pane.active {
+  display: block;
+  animation: fadeInPane 0.35s ease;
+}
+
+@keyframes fadeInPane {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.vlab-layout-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 1.8rem;
+  align-items: start;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 992px) {
+  .vlab-layout-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Meja Kerja Visual (Bench Card) */
+.vlab-bench-card {
+  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+  border: 1.5px solid #cbd5e1;
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.bench-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1.2rem;
+}
+
+.bench-badge {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.bench-status {
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 800;
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+/* Stage Alat Lavoisier & Neraca Digital */
+.lav-apparatus-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem 0 1rem;
+}
+
+.lav-flask-container {
+  width: 140px;
+  height: 190px;
+  position: relative;
+  margin-bottom: -15px;
+  z-index: 2;
+}
+
+.lav-flask-svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.08));
+}
+
+/* Neraca Digital 0.01g */
+.digital-scale-box {
+  width: 260px;
+  background: #334155;
+  border-radius: var(--radius-md);
+  padding: 0.6rem 0.8rem 1rem;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1;
+}
+
+.scale-top-plate {
+  width: 220px;
+  height: 12px;
+  background: linear-gradient(180deg, #e2e8f0 0%, #cbd5e1 50%, #94a3b8 100%);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin-bottom: 0.8rem;
+}
+
+.scale-body {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.scale-screen {
+  width: 90%;
+  background: #0f172a;
+  border: 2px solid #1e293b;
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.8);
+}
+
+.scale-led-unit {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: #38bdf8;
+  letter-spacing: 1px;
+}
+
+.scale-led-value {
+  font-family: var(--font-mono);
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: #38bdf8;
+  text-shadow: 0 0 12px rgba(56, 189, 248, 0.75);
+  line-height: 1.1;
+}
+
+.scale-badge-label {
+  font-size: 0.7rem;
+  color: #94a3b8;
+  margin-top: 0.6rem;
+  font-weight: 600;
+}
+
+/* Result Alert Box */
+.lav-result-alert {
+  margin-top: 1.5rem;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: var(--radius-md);
+  padding: 0.85rem 1rem;
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.alert-tip-icon {
+  font-size: 1.25rem;
+}
+
+.alert-tip-content {
+  font-size: 0.86rem;
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+/* Card Kontrol Variabel Praktikum */
+.vlab-controls-card {
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.ctrl-heading {
+  font-size: 1.15rem;
+  color: var(--text-dark);
+  margin-bottom: 1.2rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.ctrl-group {
+  margin-bottom: 1.2rem;
+}
+
+.ctrl-label {
+  display: block;
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+}
+
+/* Radio Pill Group */
+.radio-pill-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.radio-pill-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 0.85rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.radio-pill-item:hover {
+  background: #f0f9ff;
+  border-color: #bae6fd;
+}
+
+.radio-pill-item input[type="radio"] {
+  margin-top: 0.25rem;
+  accent-color: #0284c7;
+}
+
+.radio-pill-label {
+  display: flex;
+  flex-direction: column;
+}
+
+.radio-pill-label strong {
+  font-size: 0.88rem;
+  color: var(--text-dark);
+}
+
+.radio-pill-label small {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  margin-top: 0.15rem;
+}
+
+/* System Toggle Buttons */
+.system-toggle-btns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+
+.btn-sys-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.65rem 0.8rem;
+  background: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  text-align: left;
+  transition: all var(--transition-fast);
+}
+
+.btn-sys-toggle:hover {
+  background: #f1f5f9;
+}
+
+.btn-sys-toggle.active {
+  background: #eff6ff;
+  border-color: #0284c7;
+  box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.2);
+}
+
+.sys-icon {
+  font-size: 1.25rem;
+}
+
+.sys-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.sys-text strong {
+  font-size: 0.85rem;
+  color: var(--text-dark);
+}
+
+.sys-text small {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+/* Sliders */
+.slider-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.35rem;
+}
+
+.slider-val-badge {
+  background: #e0f2fe;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
+  border-radius: var(--radius-full);
+  padding: 0.15rem 0.6rem;
+  font-size: 0.82rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+
+.vlab-range-slider {
+  width: 100%;
+  accent-color: #0284c7;
+  cursor: pointer;
+  height: 6px;
+}
+
+/* Action Rows */
+.vlab-actions-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1.5rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+.vlab-actions-row .btn {
+  flex: 1;
+  min-width: 120px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ==========================================================================
+   TABEL PENGAMATAN MULTI-PERCOBAAN
+   ========================================================================== */
+
+.vlab-table-container {
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  margin-top: 1.5rem;
+}
+
+.table-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.table-scroll-wrapper {
+  overflow-x: auto;
+}
+
+.vlab-data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+  text-align: left;
+}
+
+.vlab-data-table th {
+  background: #f1f5f9;
+  color: var(--text-dark);
+  font-weight: 700;
+  padding: 0.75rem 0.85rem;
+  border-bottom: 2px solid #cbd5e1;
+  white-space: nowrap;
+}
+
+.vlab-data-table td {
+  padding: 0.75rem 0.85rem;
+  border-bottom: 1px solid #e2e8f0;
+  color: var(--text-primary);
+}
+
+.vlab-data-table tr:hover td {
+  background: #f8fafc;
+}
+
+.empty-row-placeholder td {
+  text-align: center;
+  color: var(--text-muted);
+  font-style: italic;
+  padding: 1.5rem;
+}
+
+/* ==========================================================================
+   STYLE PRAKTIKUM HUKUM PROUST (PERBANDINGAN TETAP)
+   ========================================================================== */
+
+.proust-apparatus-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.proust-crucible-box {
+  width: 160px;
+  height: 180px;
+}
+
+.proust-crucible-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.proust-compound-display {
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.compound-tag {
+  display: inline-block;
+  background: #0f172a;
+  color: #38bdf8;
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
+  font-weight: 700;
+  padding: 0.35rem 0.9rem;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.compound-subtext {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 0.3rem;
+}
+
+/* Breakdown Stoikiometri Bars */
+.proust-breakdown-card {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: var(--radius-md);
+  padding: 1rem 1.2rem;
+  margin-top: 1.2rem;
+}
+
+.breakdown-title {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 0.75rem;
+}
+
+.stoich-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.stoich-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.stoich-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  color: var(--text-primary);
+}
+
+.stoich-progress {
+  width: 100%;
+  height: 8px;
+  background: #f1f5f9;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.stoich-fill {
+  height: 100%;
+  transition: width 0.6s ease;
+}
+
+.stoich-fill.bg-blue { background: #0284c7; }
+.stoich-fill.bg-amber { background: #d97706; }
+.stoich-fill.bg-emerald { background: #059669; }
+
+.stoich-rem-tag {
+  font-size: 0.74rem;
+  color: #d97706;
+  font-weight: 600;
+  align-self: flex-end;
+}
+
+.proust-ratio-proof-pill {
+  margin-top: 0.9rem;
+  padding: 0.75rem 0.9rem;
+  background: #f0fdf4;
+  border: 1px solid #86efac;
+  border-radius: var(--radius-sm);
+  font-size: 0.86rem;
+  color: #166534;
+}
+
+.preset-btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.preset-btn-group .btn {
+  font-size: 0.78rem;
+  padding: 0.35rem 0.65rem;
+}
+
+/* ==========================================================================
+   STYLE PRAKTIKUM HUKUM DALTON (KELIPATAN BERGANDA)
+   ========================================================================== */
+
+.dalton-dual-stage {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.dalton-chamber-box {
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.chamber-header-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.chamber-formula-tag {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent-navy);
+  margin: 0.25rem 0 0.6rem;
+}
+
+.molecule-stage {
+  width: 140px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.molecule-svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+}
+
+.chamber-data-pill {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.8rem;
+  font-size: 0.8rem;
+  width: 100%;
+  margin-top: 0.5rem;
+  line-height: 1.5;
+}
+
+.dalton-vs-divider {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  background: #e2e8f0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Proof Card Dalton */
+.dalton-proof-box {
+  background: #ffffff;
+  border: 1.5px solid #bae6fd;
+  border-radius: var(--radius-md);
+  padding: 1.2rem;
+  margin-top: 1.2rem;
+}
+
+.proof-step {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.88rem;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.proof-step.highlight {
+  background: #eff6ff;
+  padding: 0.5rem 0.8rem;
+  border-radius: var(--radius-sm);
+  border-left: 3px solid #0284c7;
+}
+
+.step-num {
+  font-weight: 800;
+  color: #0284c7;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+}
+
+.proof-verdict {
+  margin-top: 0.85rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #e2e8f0;
+  color: #166534;
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+/* Quiz Dalton */
+.dalton-quiz-mini-card {
+  margin-top: 1.5rem;
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: var(--radius-md);
+  padding: 1rem 1.2rem;
+}
+
+.dalton-quiz-mini-card h5 {
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  margin-bottom: 0.4rem;
+}
+
+.quiz-options-grid {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-quiz-opt {
+  flex: 1;
+  padding: 0.5rem;
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  color: var(--text-dark);
+  transition: all var(--transition-fast);
+}
+
+.btn-quiz-opt:hover {
+  background: #f0f9ff;
+  border-color: #0284c7;
+  color: #0284c7;
+}
+
+.quiz-feedback-box {
+  margin-top: 0.75rem;
+  padding: 0.75rem 0.9rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
+.quiz-feedback-box.success {
+  background: #f0fdf4;
+  border: 1px solid #86efac;
+  color: #166534;
+}
+
+.quiz-feedback-box.error {
+  background: #fff1f2;
+  border: 1px solid #fecdd3;
+  color: #991b1b;
+}
+
+/* Animasi Steam & Flame */
+@keyframes fumeFloat {
+  0% { transform: translateY(0) scale(0.9); opacity: 0.2; }
+  50% { transform: translateY(-12px) scale(1.1); opacity: 0.8; }
+  100% { transform: translateY(-24px) scale(1.3); opacity: 0; }
+}
+
+.steam-anim-1 { animation: fumeFloat 2s infinite ease-out; }
+.steam-anim-2 { animation: fumeFloat 2.3s infinite ease-out 0.4s; }
+.steam-anim-3 { animation: fumeFloat 2.1s infinite ease-out 0.8s; }
+
+/* ==========================================================================
+   HALAMAN 6: PRAKTIKUM SEDERHANA (3 SIMULASI LAB INTERAKTIF)
+   ========================================================================== */
+
+.sim-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.sim-view-pane {
+  display: none;
+}
+.sim-view-pane.active {
+  display: block;
+}
+
+.sim-workspace-layout {
+  display: grid;
+  grid-template-columns: 1.3fr 0.9fr;
+  gap: 1.8rem;
+  align-items: start;
+}
+
+.sim-interactive-bench {
+  background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+  border: 2px solid #cbd5e1;
+  border-radius: var(--radius-xl);
+  padding: 1.8rem;
+  min-height: 480px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.04), var(--shadow-md);
+}
+
+.sim-bench-surface {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  background: linear-gradient(180deg, #64748b 0%, #334155 100%);
+  border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+  border-top: 4px solid #94a3b8;
+}
+
+.sim-controls-panel {
+  background: #ffffff;
+  border: 1px solid #bfdbfe;
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+/* Digital Scale View */
+.digital-scale {
+  width: 220px;
+  height: 140px;
+  background: #e2e8f0;
+  border-radius: var(--radius-md);
+  border: 2px solid #94a3b8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem;
+  position: relative;
+  z-index: 5;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.15);
+}
+
+.scale-pan {
+  width: 170px;
+  height: 18px;
+  background: linear-gradient(180deg, #f1f5f9 0%, #cbd5e1 100%);
+  border-radius: 4px;
+  border: 1px solid #94a3b8;
+}
+
+.scale-display {
+  width: 150px;
+  background: #0f172a;
+  border-radius: 6px;
+  padding: 0.4rem 0.6rem;
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #38bdf8;
+  letter-spacing: 0.05em;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Bunsen Flame Test Rig */
+.bunsen-rig {
+  position: relative;
+  width: 200px;
+  height: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  z-index: 5;
+}
+
+.flame-particle-box {
+  width: 80px;
+  height: 140px;
+  position: absolute;
+  top: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.flame-core {
+  width: 44px;
+  height: 110px;
+  background: radial-gradient(ellipse at bottom, #38bdf8 0%, #0284c7 40%, rgba(56, 189, 248, 0.2) 70%, transparent 100%);
+  border-radius: 50% 50% 20% 20% / 60% 60% 40% 40%;
+  animation: flameWobble 0.25s infinite alternate ease-in-out;
+  filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.8));
+  transition: background 0.5s ease, filter 0.5s ease;
+}
+
+@keyframes flameWobble {
+  0% { transform: scaleX(0.95) scaleY(1.02); }
+  100% { transform: scaleX(1.05) scaleY(0.98); }
+}
+
+.bunsen-burner-body {
+  width: 32px;
+  height: 130px;
+  background: linear-gradient(90deg, #94a3b8 0%, #cbd5e1 40%, #64748b 100%);
+  border-radius: 4px;
+}
+
+.bunsen-base {
+  width: 120px;
+  height: 24px;
+  background: #334155;
+  border-radius: 6px;
+  margin-top: -4px;
+}
+
+/* Titration Rig */
+.titration-rig {
+  position: relative;
+  width: 260px;
+  height: 420px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 5;
+}
+
+.titration-stand {
+  position: absolute;
+  left: 30px;
+  bottom: 0;
+  width: 12px;
+  height: 400px;
+  background: #475569;
+  border-radius: 4px;
+}
+
+.titration-base-iron {
+  position: absolute;
+  left: 10px;
+  bottom: 0;
+  width: 160px;
+  height: 16px;
+  background: #1e293b;
+  border-radius: 4px;
+}
+
+.burette-tube {
+  position: absolute;
+  left: 90px;
+  top: 20px;
+  width: 20px;
+  height: 250px;
+  background: rgba(255, 255, 255, 0.4);
+  border: 1.5px solid #64748b;
+  border-radius: 3px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.burette-liquid {
+  width: 100%;
+  height: 70%;
+  background: rgba(56, 189, 248, 0.4);
+  transition: height 0.3s ease;
+}
+
+.burette-stopcock {
+  position: absolute;
+  left: 80px;
+  top: 270px;
+  width: 40px;
+  height: 20px;
+  background: #ef4444;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  transition: transform 0.2s ease;
+}
+
+.flask-titration {
+  position: absolute;
+  left: 65px;
+  bottom: 20px;
+  width: 70px;
+  height: 90px;
+}
+
+/* ==========================================================================
+   HALAMAN 7: VIDEO SIMULASI KESALAHAN LAB & LKPD PBL
+   ========================================================================== */
+
+.pbl-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.video-card-wrapper {
+  background: #ffffff;
+  border: 1px solid #bfdbfe;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.video-player-frame {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+  background: #0f172a;
+}
+
+.video-player-frame iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.video-info-box {
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* LKPD Sintaks Problem-Based Learning */
+.lkpd-container {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: var(--radius-lg);
+  padding: 2.2rem;
+  box-shadow: var(--shadow-md);
+  position: relative;
+}
+
+.lkpd-header {
+  border-bottom: 2px solid #0284c7;
+  padding-bottom: 1.2rem;
+  margin-bottom: 1.8rem;
+  text-align: center;
+}
+
+.lkpd-header h3 {
+  font-size: 1.6rem;
+  color: var(--text-dark);
+  font-weight: 800;
+}
+
+.lkpd-header p {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.student-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.form-group-pbl label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--accent-navy);
+  margin-bottom: 0.35rem;
+}
+
+.form-control-pbl {
+  width: 100%;
+  padding: 0.6rem 0.85rem;
+  font-size: 0.9rem;
+  border: 1.5px solid #cbd5e1;
+  border-radius: var(--radius-sm);
+  background: #ffffff;
+  color: var(--text-dark);
+  font-family: var(--font-body);
+  transition: all var(--transition-fast);
+}
+
+.form-control-pbl:focus {
+  outline: none;
+  border-color: #0284c7;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+}
+
+.pbl-phase-block {
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  background: #fafafa;
+  transition: all var(--transition-fast);
+}
+
+.pbl-phase-block:hover {
+  background: #ffffff;
+  border-color: #93c5fd;
+  box-shadow: var(--shadow-sm);
+}
+
+.phase-tag {
+  display: inline-block;
+  background: #e0f2fe;
+  color: #0369a1;
+  font-size: 0.76rem;
+  font-weight: 800;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  margin-bottom: 0.5rem;
+}
+
+.pbl-phase-block h4 {
+  font-size: 1.15rem;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+}
+
+.pbl-phase-block .guideline-text {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.pbl-textarea {
+  width: 100%;
+  min-height: 100px;
+  resize: vertical;
+}
+
+.lkpd-actions-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #cbd5e1;
+}
+
+/* ==========================================================================
+   HALAMAN 8: KUIS EVALUASI INTERAKTIF
+   ========================================================================== */
+
+.quiz-container {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  box-shadow: var(--shadow-md);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.quiz-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 1.2rem;
+  margin-bottom: 1.8rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.quiz-progress-badge {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--accent-blue);
+  background: #e0f2fe;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full);
+}
+
+.quiz-timer-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #dc2626;
+  background: #fef2f2;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full);
+  border: 1px solid #fecaca;
+}
+
+.quiz-question-box h3 {
+  font-size: 1.25rem;
+  color: var(--text-dark);
+  margin-bottom: 1.5rem;
+  line-height: 1.45;
+}
+
+.quiz-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-bottom: 2rem;
+}
+
+.quiz-option-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border: 2px solid #e2e8f0;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  background: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.quiz-option-item:hover {
+  background: #f0f9ff;
+  border-color: #93c5fd;
+  color: #0369a1;
+}
+
+.quiz-option-item.selected {
+  border-color: #0284c7;
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.quiz-option-item.correct {
+  border-color: #10b981;
+  background: #ecfdf5;
+  color: #065f46;
+}
+
+.quiz-option-item.incorrect {
+  border-color: #ef4444;
+  background: #fef2f2;
+  color: #991b1b;
+}
+
+.quiz-option-item .opt-letter {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.quiz-option-item.selected .opt-letter {
+  background: #0284c7;
+  color: #fff;
+  border-color: #0284c7;
+}
+
+.quiz-explanation-box {
+  background: #f0fdf4;
+  border-left: 4px solid #10b981;
+  padding: 1rem 1.25rem;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  color: #065f46;
+  display: none;
+}
+
+/* Quiz Result Score Card */
+.quiz-result-card {
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+  display: none;
+}
+
+.score-circle {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  box-shadow: var(--shadow-lg);
+}
+
+.score-num {
+  font-size: 2.8rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.score-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+/* ==========================================================================
+   HALAMAN 9: REFLEKSI SISWA
+   ========================================================================== */
+
+.reflection-container {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: var(--radius-xl);
+  padding: 2.2rem;
+  box-shadow: var(--shadow-md);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.reflection-section-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.reflection-section-card h4 {
+  font-size: 1.15rem;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+}
+
+.reflection-inputs-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-top: 1rem;
+}
+
+.pledge-box {
+  background: #eff6ff;
+  border: 2px dashed #93c5fd;
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.pledge-box p {
+  font-style: italic;
+  font-weight: 600;
+  color: var(--accent-navy);
+  margin-bottom: 0.85rem;
+}
+
+/* ==========================================================================
+   HALAMAN 10: PENUTUP & CETAK SERTIFIKAT
+   ========================================================================== */
+
+.certificate-section-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.cert-instruction-card {
+  max-width: 800px;
+  width: 100%;
+  text-align: center;
+}
+
+.cert-input-row {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  max-width: 500px;
+  margin: 1.25rem auto 0;
+}
+
+/* Canvas Sertifikat Interaktif */
+.certificate-preview-container {
+  width: 100%;
+  max-width: 960px;
+  position: relative;
+  box-shadow: var(--shadow-lg);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+}
+
+#certificate-canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.cert-actions-bar {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   FOOTER APLIKASI
+   ========================================================================== */
+
+.site-footer {
+  background: #ffffff;
+  border-top: 1px solid #cbd5e1;
+  padding: 2.5rem 1.5rem 1.5rem;
+  margin-top: auto;
+  color: var(--text-secondary);
+}
+
+.footer-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.footer-brand h3 {
+  font-size: 1.25rem;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+}
+
+.footer-brand p {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  max-width: 460px;
+}
+
+.footer-teacher-block {
+  margin-top: 1rem;
+  padding: 0.85rem 1rem;
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  border-radius: var(--radius-sm);
+  display: inline-block;
+}
+
+.footer-teacher-block strong {
+  display: block;
+  font-size: 0.92rem;
+  color: var(--text-dark);
+}
+
+.footer-teacher-block span {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+}
+
+.footer-col h4 {
+  font-size: 1rem;
+  color: var(--text-dark);
+  margin-bottom: 1rem;
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+}
+
+.footer-bottom {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN (TABLET & MOBILE)
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .hero-section,
+  .apd-container,
+  .equipment-layout,
+  .bohr-simulator-layout,
+  .molymod-workspace-layout,
+  .sim-workspace-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-inner {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .site-header {
+    padding: 0.5rem 1rem;
+  }
+
+  .teacher-pill {
+    display: none;
+  }
+
+  .btn-menu-toggle {
+    display: flex;
+  }
+
+  .hero-content h2 {
+    font-size: 1.8rem;
+  }
+
+  .rules-dos-donts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .molymod-canvas-container {
+    height: 360px;
+  }
+
+  .molymod-floating-toolbar {
+    bottom: 8px;
+    padding: 0.3rem 0.5rem;
+  }
+
+  .btn-3d-tool {
+    font-size: 0.68rem;
+    padding: 0.28rem 0.55rem;
+  }
+}
